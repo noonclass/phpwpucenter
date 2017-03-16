@@ -50,6 +50,77 @@ if(!wp_next_scheduled('image_tag_ds_to') )
 	wp_schedule_event( time(), 'daily', 'image_tag_ds_to');
 
 
+/* UM文件引入
+/* -------------------------------- */
+/* Set plugin path */
+if ( !defined( 'UM_DIR' ) ) {
+	define( 'UM_DIR', get_template_directory() );
+}
+/* Set plugin url */
+if ( !defined( 'UM_URI' ) ) {
+	define( 'UM_URI', get_stylesheet_directory_uri() );
+}
+
+require_once('func/functions.php');
+require_once('func/setting-api.php');
+require_once('func/affiliate.php');
+require_once('func/follow.php');
+require_once('func/membership.php');
+require_once('func/shop.php');
+require_once('func/credit.php');
+require_once('func/message.php');
+require_once('func/mail.php');
+require_once('func/meta-box.php');
+require_once('func/open-social.php');
+require_once('func/extension.php');
+require_once('template/loginbox.php');
+require_once('template/order.php');
+require_once('widgets/ucenter.php');
+require_once('widgets/credits-rank.php');
+
+/* Add admin menu */
+if( is_admin() ) {
+    add_action('admin_menu', 'display_um_menu');
+}
+function display_um_menu() {
+    add_menu_page('用户中心', '用户中心', 'administrator','ucenter_market', 'um_setting_page','dashicons-groups', 26);
+}
+
+/* Setting page html */
+function um_setting_page(){
+	settings_errors();
+	?>
+	<div class="wrap">
+		<h2 class="nav-tab-wrapper">
+	        <a class="nav-tab nav-tab-active" href="javascript:;" id="tab-title-membership">会员设置</a>
+	        <a class="nav-tab" href="javascript:;" id="tab-title-ucenter">用户中心设置</a>
+	        <a class="nav-tab" href="javascript:;" id="tab-title-store">商城设置</a>
+	        <a class="nav-tab" href="javascript:;" id="tab-title-payment">支付宝设置</a>
+	        <a class="nav-tab" href="javascript:;" id="tab-title-credit">积分设置</a>
+	        <a class="nav-tab" href="javascript:;" id="tab-title-mail">邮件设置</a>
+	        <a class="nav-tab" href="javascript:;" id="tab-title-social">社会化登录设置</a>
+	        <a class="nav-tab" href="javascript:;" id="tab-title-other">其他设置</a>      
+	    </h2>
+		<form action="options.php" method="POST">
+			<?php settings_fields( 'ucenter_market_group' ); ?>
+			<?php
+				settings_errors();
+				$labels = um_get_option_labels();
+				extract($labels);
+			?>
+			<?php foreach ( $sections as $section_name => $section ) { ?>
+	            <div id="tab-<?php echo $section_name; ?>" class="div-tab hidden">
+	                <?php um_option_do_settings_section($option_page, $section_name); ?>
+	            </div>                      
+	        <?php } ?>
+			<input type="hidden" name="<?php echo $option_name;?>[current_tab]" id="current_tab" value="" />
+			<?php submit_button(); ?>
+		</form>
+		<?php um_option_tab_script(); ?>
+	</div>
+<?php
+}
+
 /* 文件引入
 /* -------------------------------- */
 require CX_FUNCT .'options-themes.php';
@@ -66,9 +137,15 @@ require CX_FUNCT .'cx-widgets.php';//小工具引入
 /* 加载前端脚本及样式
 /* -------------------------------- */
 function ality_scripts() {
-	wp_enqueue_style( 'style', get_stylesheet_uri(), array(), '2016.05.08' );
-	wp_enqueue_style( 'awesome', CX_THEMES_URL. '/style/awesome.min.css', array(), '1.0' );
-	wp_enqueue_script( 'script', CX_THEMES_URL. '/script/script.js', array(), '1.97', true);
+	wp_enqueue_style( 'style', get_stylesheet_uri());
+	wp_enqueue_style( 'awesome', CX_THEMES_URL. '/style/awesome.min.css', false, '4.5.0' );
+    wp_enqueue_style( 'bxslider', CX_THEMES_URL . '/style/bxslider.min.css', false, '3.3.4' );
+    wp_enqueue_style( 'bootstrap', CX_THEMES_URL . '/style/bootstrap.min.css', false, '3.3.4' );
+
+    wp_enqueue_script( 'lazyload', CX_THEMES_URL . '/script/lazyload.min.js', array('jquery'), '1.9.7', true);
+    wp_enqueue_script( 'bxslider', CX_THEMES_URL . '/script/bxslider.min.js', array('jquery'), '4.2.12', true);
+    wp_enqueue_script( 'bootstrap', CX_THEMES_URL . '/script/bootstrap.min.js', array('jquery'), '3.3.4', true);
+    wp_enqueue_script( 'global', CX_THEMES_URL . '/script/global.js', array('jquery'), '1.9.7', true);
 }
 add_action( 'wp_enqueue_scripts', 'ality_scripts' );
 
@@ -339,14 +416,6 @@ function wpms_replace(){
 /* -------------------------------- */
 add_filter('show_admin_bar', '__return_false');
 
-/* 头像
-/* -------------------------------- */
-function um_get_ssl_avatar($avatar) {
-	$avatar = preg_replace('/.*\/avatar\/(.*)\?s=([\d]+)(&?.*)/','<img src="https://secure.gravatar.com/avatar/$1?s=$2" class="avatar" height="$2" width="$2">',$avatar);	
-	return $avatar;
-}
-add_filter( 'get_avatar', 'um_get_ssl_avatar');
-
 /* 前台不加载语言包
 /* -------------------------------- */
 add_filter( 'locale', 'wpjam_locale' );
@@ -430,17 +499,6 @@ remove_action( 'wp_print_styles',	'print_emoji_styles');
 remove_filter( 'the_content_feed',	'wp_staticize_emoji');
 remove_filter( 'comment_text_rss',	'wp_staticize_emoji');
 remove_filter( 'wp_mail',		'wp_staticize_emoji_for_email');
-
-/* 禁止加载WP自带的jquery.js
-/* -------------------------------- */
-add_action( 'pre_get_posts', 'jquery_register' );
-function jquery_register() {
-if ( !is_admin() ) {
-	wp_deregister_script( 'jquery' );
-	wp_register_script( 'jquery', CX_THEMES_URL. '/script/jquery.min.js' , false, '2.2.2', false );
-	wp_enqueue_script( 'jquery' );
-}
-}
 
 
 /* wordpress中使用canonical标签
@@ -551,7 +609,7 @@ function wp_compress_html(){
 		$buffer_out='';
         $buffer=explode("<!--wp-compress-html-->", $buffer);
         $count=count ($buffer);
-        for ($i = 0; $i <= $count; $i++){
+        for ($i = 0; $i < $count; $i++){
                 $buffer[$i]=(str_replace("\t", " ", $buffer[$i]));
                 $buffer[$i]=(str_replace("\n\n", "\n", $buffer[$i]));
                 $buffer[$i]=(str_replace("\n", "", $buffer[$i]));
@@ -572,15 +630,6 @@ add_action('get_header', 'wp_compress_html');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**                                            WP优化.end                                               **/
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/* 添加编辑器快捷按钮
-/* -------------------------------- */
-add_action('admin_print_scripts', 'my_quicktags');
-function my_quicktags() {
-    wp_enqueue_script('my_quicktags', get_stylesheet_directory_uri() . '/script/my_quicktags.js', array(
-        'quicktags'
-    ));
-};
 
 /*添加短代码功能
 /* -------------------------------- */
