@@ -1,24 +1,14 @@
 <?php
-date_default_timezone_set("PRC");
-/***************************************
-主题functions.php修改说明：
-① 修改主题文件请勿使用记事本修改，编码不同会导致网站打不开；
-② 添加功能是请添加到add_kz.php里面，放add_kz.php里面的效果跟放functions.php里面的效果是相同的；
-  原因解释：
-  1、如果代码放在functions.php里面每次升级都要重新修改文件；
-  2、如果修改出错可以只覆盖自己修改过的文件，影响范围小；
-  3、后续升级时不覆盖add_kz.php文件即可快速升级的同时保留自己添加的功能；
-  4、二次开发主题时一定要把代码与主题代码分开，方便升级；
-③ 修改文件前注意备份，防止修改异常时可以不能及时恢复；
-                    ********
-主题使用帮助 : 免费主题请加QQ群565616228请求帮助！
-                    ********
-提示：本区域前端不可见并被注释，保留不会对网站速度造成影响，而且还可以方便后期修改。建议保留本区域！
-                    ********
-## Theme Name: CX-UDY
-## Version: 0.1
+/*!**************************************************************
+Theme Name: MOE-PIX
+Theme URI: http://moemob.com/moe-pix
+Author: 萌える動 • 萌动网
+Author URI: http://moemob.com
+Description: 时尚自适应图片主题，集成了功能强大的前台用户中心
+Version: 1.0
+****************************************************************/
 
-****************************************/
+date_default_timezone_set("PRC");
 
 if ( !defined( 'CX_THEME' ) ) 
 	define('CX_THEME', get_template_directory().'/inc/template/');
@@ -124,7 +114,6 @@ function um_setting_page(){
 /* 文件引入
 /* -------------------------------- */
 require CX_FUNCT .'options-themes.php';
-require get_template_directory() .'/add_kz.php';
 require CX_FUNCT .'framework_core.php'; //加载核心类
 require CX_FUNCT .'options_feild.php'; //设置页面
 require CX_FUNCT .'termmeta_feild.php'; //分类字段
@@ -134,9 +123,16 @@ require CX_FUNCT .'comment-template.php';//评论模板
 require CX_FUNCT .'cx-widgets.php';//小工具引入
 
 
-/* 加载前端脚本及样式
+/* Add JS and CSS - 加载前端脚本及样式
 /* -------------------------------- */
 function ality_scripts() {
+    if (!is_admin()){
+        wp_deregister_script( 'jquery' );
+        wp_register_script( 'jquery', CX_THEMES_URL.'/script/jquery.min.js' , false, '2.2.2', false );
+        wp_enqueue_script( 'jquery' );
+    }
+    
+    // Main
 	wp_enqueue_style( 'style', get_stylesheet_uri());
 	wp_enqueue_style( 'awesome', CX_THEMES_URL. '/style/awesome.min.css', false, '4.5.0' );
     wp_enqueue_style( 'bxslider', CX_THEMES_URL . '/style/bxslider.min.css', false, '3.3.4' );
@@ -146,31 +142,57 @@ function ality_scripts() {
     wp_enqueue_script( 'bxslider', CX_THEMES_URL . '/script/bxslider.min.js', array('jquery'), '4.2.12', true);
     wp_enqueue_script( 'bootstrap', CX_THEMES_URL . '/script/bootstrap.min.js', array('jquery'), '3.3.4', true);
     wp_enqueue_script( 'global', CX_THEMES_URL . '/script/global.js', array('jquery'), '1.9.7', true);
+    
+    // UM
+    if(is_author()){
+        wp_enqueue_style('thickbox');
+        wp_enqueue_script('thickbox');
+        wp_enqueue_script('media-upload');
+    }
+    
+    wp_enqueue_style( 'um', CX_THEMES_URL.'/style/um.css' );
+    wp_enqueue_script( 'um', CX_THEMES_URL.'/script/um.js', array('jquery'), '1.2.0', true );
 }
 add_action( 'wp_enqueue_scripts', 'ality_scripts' );
 
 
-/* 参数传递
+/* JS parameters - 参数传递
 /* -------------------------------- */
 function cx_add_scripts() {?>
 <script type="text/javascript">
-	var chenxing = <?php echo script_parameter(); ?>;
+	var moemob = <?php echo script_parameter(); ?>;
 </script>
 <?php
 }
-add_action('wp_head', 'cx_add_scripts');
+
 function script_parameter(){
 	$object = array();
-	$object['ajax_url'] = admin_url('admin-ajax.php');
-	$object['themes_dir'] = CX_THEMES_URL;
-	$object['home_url'] = home_url();
+	$object['home_url']  = home_url();
+	$object['ajax_url']  = admin_url('admin-ajax.php');
+    $object['admin_url'] = admin_url();
+    
 	if(is_single()){
+        global $post;
+		$object['pid'] = $post->ID;
 		$object['order'] = get_option('comment_order');
 		$object['formpostion'] = 'top';		
 	}
+    
+    // UM
+	$object['uid'] = (int)get_current_user_id();
+	$object['is_admin'] = current_user_can('edit_users')?1:0;
+	$object['redirecturl'] = um_get_current_page_url();
+	$object['loadingmessage'] = '正在请求中，请稍等...';
+	$object['paged']	= get_query_var('paged')?(int)get_query_var('paged'):1;
+	$object['cpage']	= get_query_var('cpage')?(int)get_query_var('cpage'):1;
+    $object['captcha']  = CX_THEMES_URL.'/func/captcha.php?';
+	$object['timthumb'] = CX_THEMES_URL.'/func/timthumb.php?src=';
+    
 	$object_json = json_encode($object);
 	return $object_json;
 }
+
+add_action('wp_head', 'cx_add_scripts');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**                                         主题核心代码.end                                            **/
@@ -180,16 +202,20 @@ function script_parameter(){
 /* -------------------------------- */
 function cx_options($options='',$echo= 0) {	
 	global $ashu_option;
+    if(!isset($ashu_option['general'][$options])){
+        return;
+    }
+    
 	$cx_option = $ashu_option['general'][$options];	
-	if(isset($cx_option)){
-		if($echo == 0){
-			return $cx_option;
-		}else{
-			echo $cx_option;
-		}	
-	}else{
-		return;
-	}
+	if(!isset($cx_option)){
+        return;
+    }
+    
+    if($echo == 0){
+        return $cx_option;
+    }else{
+        echo $cx_option;
+    }
 }
 
 /* 模板调用
@@ -619,7 +645,7 @@ function wp_compress_html(){
                 }
             $buffer_out.=$buffer[$i];
         }		
-        $buffer_out.="\n<!--代码已压缩 该主题由“晨星博客” @小牛爱奋斗开发制作！URL:http://www.chenxingweb.com/ -->"; 		
+        $buffer_out.="\n<!--wp-compress-html-complete-->"; 		
     return $buffer_out;
 }
 ob_start("wp_compress_html_main");
@@ -866,7 +892,7 @@ function get_week_post_count(){
 /* -------------------------------- */
 function Bing_statistics_visitors( $cache = false ){
  global $post;
- $id = $post->ID;
+ if(isset($post)) $id = $post->ID;
  if( $cache ) $id = $_GET['id'];
  if( ( !is_singular() && !$cache ) || !$id ) return;
  if( WP_CACHE && !$cache ){?>
@@ -1084,8 +1110,8 @@ function cx_timthumb($width=300,$height=300,$name='300X300',$id = 0,$display = t
 		$get_thumb = get_post_thumbnail_id($id);
 		$src = wp_get_attachment_image_src($get_thumb,'full');
 		$src = $src[0];
-	}	
-	$img = CX_THEMES_URL. '/timthumb.php';
+	}
+	$img = CX_THEMES_URL. '/func/timthumb.php';
 	$fs = (int)cx_options('_thumbnail');
 	$fg = cx_options('_oss_fenge');
 	if($fs == 1 && function_exists('modefiy_img_url')){
@@ -1253,7 +1279,7 @@ function cx_foot(){
 	} else {
 	$output .= ' '.$_foot_ba;
 	}	
-	$output .= '</span></p><p>该主题由 <a href="http://www.chenxingweb.com">晨星博客</a> 开发制作';
+	$output .= '</span></p><p>该主题由 <a href="http://www.moemob.com">萌动网</a> 开发制作';
 	$output .= baidu_tongji();
 	$output .= '</p>';
 	$output .= '</div>';
@@ -1276,7 +1302,7 @@ if(!function_exists('get_most_viewed')) {
 				cx_themes_switch(3000,$post,$meta,$key);
             }
         } else {
-            echo '<li>'.__('N/A', 'chenxingweb.com').'</li>'."\n";
+            echo '<li>'.__('N/A', 'moemob').'</li>'."\n";
         }
     }
 }

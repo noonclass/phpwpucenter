@@ -1,16 +1,13 @@
 <?php
-/**
- * Main Template of Ucenter & Market WordPress Plugin
- *
- * @package   Ucenter & Market
- * @version   1.0
- * @date      2015.6.13
- * @author    Zhiyan <chinash2010@gmail.com>
- * @site      Zhiyanblog <www.zhiyanblog.com>
- * @copyright Copyright (c) 2015-2015, Zhiyan
- * @license   http://opensource.org/licenses/gpl-2.0.php GPL v2 or later
- * @link      http://www.zhiyanblog.com/wordpress-plugin-ucenter-and-market.html
-**/
+/*!**************************************************************
+Theme Name: MOE-PIX
+Theme URI: http://moemob.com/moe-pix
+Author: 萌える動 • 萌动网
+Author URI: http://moemob.com
+Description: 时尚自适应图片主题，集成了功能强大的前台用户中心
+Version: 1.0
+Package: Ucenter & Market
+****************************************************************/
 ?>
 <?php
 global $wp_query;
@@ -144,7 +141,7 @@ if ( $current_user->ID==$curauth->ID ) { ?>
 				<div class="panel panel-success">
 					<div class="panel-heading"><?php echo __('积分充值（仅自己可见）','um');?></div>
 					<div class="panel-body">
-						<form id="creditrechargeform" role="form"  method="post" action="<?php echo UM_URI.'alipay/alipayapi.php'; ?>" onsubmit="return false;">
+						<form id="creditrechargeform" role="form"  method="post" action="<?php echo UM_URI.'/alipay/alipayapi.php'; ?>" onsubmit="return false;">
 							<input type="hidden" name="creditrechargeNonce" value="<?php echo  wp_create_nonce( 'creditrecharge-nonce' );?>" >
 							<input type = "hidden" id="order_id" name="order_id" readonly="" value="0">
 							<input type = "hidden" id="product_id" name="product_id" readonly="" value="-5">

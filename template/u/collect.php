@@ -1,16 +1,13 @@
 <?php
-/**
- * Main Template of Ucenter & Market WordPress Plugin
- *
- * @package   Ucenter & Market
- * @version   1.0
- * @date      2015.6.13
- * @author    Zhiyan <chinash2010@gmail.com>
- * @site      Zhiyanblog <www.zhiyanblog.com>
- * @copyright Copyright (c) 2015-2015, Zhiyan
- * @license   http://opensource.org/licenses/gpl-2.0.php GPL v2 or later
- * @link      http://www.zhiyanblog.com/wordpress-plugin-ucenter-and-market.html
-**/
+/*!**************************************************************
+Theme Name: MOE-PIX
+Theme URI: http://moemob.com/moe-pix
+Author: 萌える動 • 萌动网
+Author URI: http://moemob.com
+Description: 时尚自适应图片主题，集成了功能强大的前台用户中心
+Version: 1.0
+Package: Ucenter & Market
+****************************************************************/
 ?>
 <?php
 global $wp_query;
@@ -85,7 +82,7 @@ $offset = ($paged-1)*$number;
 <?php
 	query_posts( array( 'post__not_in'=>get_option('sticky_posts'), 'post__in' => $collects_array, 'post_status' => 'publish' ) );
 	while ( have_posts() ) : the_post();
-	include(UM_DIR.'template/content-archive.php');
+	include(UM_DIR.'/template/content-archive.php');
 	endwhile; // end of the loop. 
 	um_paginate();
 	wp_reset_query();

@@ -1,14 +1,12 @@
 <?php
-/***************************************
-
-## Theme URI: http://www.chenxingweb.com/wp-theme-cx-udy.html
-## Author: 晨星博客
-## Author URI: http://www.chenxingweb.com
-## Description: 简洁时尚自适应图片主题，适合各种图片展示类网站，有问题请加QQ群565616228请求帮助。
-## Theme Name: CX-UDY
-## Version: 0.1
-
-****************************************/
+/*!**************************************************************
+Theme Name: MOE-PIX
+Theme URI: http://moemob.com/moe-pix
+Author: 萌える動 • 萌动网
+Author URI: http://moemob.com
+Description: 时尚自适应图片主题，集成了功能强大的前台用户中心
+Version: 1.0
+****************************************************************/
 
 $tab_meta = array();
 $tab_conf = array('title' => '文章扩展字段', 'id'=>'tab_box', 'page'=>array('post'), 'context'=>'normal', 'priority'=>'low');
@@ -88,7 +86,7 @@ $ashuwp_termmeta_feild = new ashuwp_termmeta_feild($ashu_feild, $taxonomy_cof);
 $slider_boxinfo = array('title' => '填写幻灯片信息', 'id'=>'sliderbox', 'page'=>array('slider_type'), 'context'=>'normal', 'priority'=>'low', 'callback'=>'');
 $slider_metas[] = array(
   'name' => '幻灯片链接',
-  'desc' => '以<code>http://</code>开头 例：http://www.chenxingweb.com',
+  'desc' => '以<code>http://</code>开头 例：http://www.moemob.com',
   'id' => '_slider_link',
   'size'=> 40,
   'std'=>'',
@@ -111,7 +109,7 @@ $ashuwp_slider = new ashuwp_postmeta_feild($slider_metas, $slider_boxinfo);
 $zhuanti_boxinfo = array('title' => '填写专题信息', 'id'=>'sliderbox', 'page'=>array('zhuanti_type'), 'context'=>'normal', 'priority'=>'low', 'callback'=>'');
 $zhuanti_metas[] = array(
   'name' => '专题链接',
-  'desc' => '以<code>http://</code>开头 例：http://www.chenxingweb.com',
+  'desc' => '以<code>http://</code>开头 例：http://www.moemob.com',
   'id' => '_slider_link',
   'size'=> 40,
   'std'=>'',
@@ -253,7 +251,7 @@ $child_option[] = array(
   'name' => '首页标题title',
   'id'   => '_seo_title',
   'desc' => '一般在80个字符内，显示在首页title标题中',
-  'std'  => '例：晨星博客-专注WordPress网站建设',
+  'std'  => '例：萌动网-专注WordPress网站建设',
   'size' => 40,
   'type' => 'text'
 );
@@ -262,7 +260,7 @@ $child_option[] = array(
   'name' => '首页关键词keywords',
   'id'   => '_seo_keywords',
   'desc' => '多个关键词请用英文逗号分隔',
-  'std'  => '例：晨星博客,SEO博客',
+  'std'  => '例：萌动网,SEO博客',
   'size' => 40,
   'type' => 'text'
 );
@@ -271,7 +269,7 @@ $child_option[] = array(
   'name' => '首页描述description',
   'id'   => '_seo_description',
   'desc' => '输入首页描述文本，一般在200字以内。。。',
-  'std'  => '例：晨星博客（www.chenxingweb.com）网站内容以wordpress开发为主，为互联网贡献关于网站开发系列技术文章。',
+  'std'  => '例：萌动网（www.moemob.com）网站内容以wordpress开发为主，为互联网贡献关于网站开发系列技术文章。',
   'size' => array(60,5),
   'type' => 'textarea'
 );

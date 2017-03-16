@@ -1,16 +1,13 @@
 <?php
-/**
- * Main Template of Ucenter & Market WordPress Plugin
- *
- * @package   Ucenter & Market
- * @version   1.0
- * @date      2015.4.6
- * @author    Zhiyan <chinash2010@gmail.com>
- * @site      Zhiyanblog <www.zhiyanblog.com>
- * @copyright Copyright (c) 2015-2015, Zhiyan
- * @license   http://opensource.org/licenses/gpl-2.0.php GPL v2 or later
- * @link      http://www.zhiyanblog.com/wordpress-plugin-ucenter-and-market.html
-**/
+/*!**************************************************************
+Theme Name: MOE-PIX
+Theme URI: http://moemob.com/moe-pix
+Author: 萌える動 • 萌动网
+Author URI: http://moemob.com
+Description: 时尚自适应图片主题，集成了功能强大的前台用户中心
+Version: 1.0
+Package: Ucenter & Market
+****************************************************************/
 
 ?>
 <article class="archive clr">
@@ -29,7 +26,7 @@
 		<div class="postlist-meta-views"><i class="fa fa-fire"></i>&nbsp;<?php echo (int)get_post_meta(get_the_ID(),'um_post_views',true); ?></div>
 		<div class="postlist-meta-category"><i class="fa fa-folder-open"></i>&nbsp;<?php the_category(' '); ?></div>
 		<div class="postlist-meta-comments"><?php if ( comments_open() ): ?><i class="fa fa-comments"></i>&nbsp;<a href="<?php comments_link(); ?>"><?php comments_number( '0', '1', '%' ); ?></a><?php  endif; ?></div>
-		<?php include(UM_DIR.'template/action-meta.php'); ?>
+		<?php include(UM_DIR.'/template/action-meta.php'); ?>
 </div>
 <?php } ?>
 <?php if( $post->post_status!='publish' ){ 

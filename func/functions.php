@@ -1,50 +1,17 @@
 <?php
 
-/**
- * Main Functions of Ucenter & Market WordPress Plugin
- *
- * @package   Ucenter & Market
- * @version   1.0
- * @date      2015.4.1
- * @author    Zhiyan <chinash2010@gmail.com>
- * @site      Zhiyanblog <www.zhiyanblog.com>
- * @copyright Copyright (c) 2015-2015, Zhiyan
- * @license   http://opensource.org/licenses/gpl-2.0.php GPL v2 or later
- * @link      http://www.zhiyanblog.com/wordpress-plugin-ucenter-and-market.html
-**/
+/*!**************************************************************
+Theme Name: MOE-PIX
+Theme URI: http://moemob.com/moe-pix
+Author: 萌える動 • 萌动网
+Author URI: http://moemob.com
+Description: 时尚自适应图片主题，集成了功能强大的前台用户中心
+Version: 1.0
+Package: Ucenter & Market
+****************************************************************/
 
 ?>
 <?php
-/* Add JS and CSS */
-function um_add_scripts() {
-        if ( !is_admin() ) {
-            wp_deregister_script( 'jquery' );
-            wp_register_script( 'jquery', UM_URI. '/script/jquery.min.js' , false, '2.2.2', false );
-            wp_enqueue_script( 'jquery' );
-        }
-        
-        if(is_author()){
-			wp_enqueue_script('media-upload');
-			wp_enqueue_script('thickbox');
-			wp_enqueue_style('thickbox');
-		}
-        
-        wp_enqueue_style( 'um', UM_URI . '/style/um.css' );
-		wp_enqueue_script( 'um', UM_URI . '/script/um.js', array('jquery'), '1.2.0', true );
-		?>
-		<script type="text/javascript">
-			var um = <?php echo um_script_parameter(); ?>;
-		</script>
-	<?php
-	if ( get_post_type()=='store' ){
-		?>
-		<script type="text/javascript">var bds_config = {'snsKey':{'tsina':"<?php echo um_get_setting('um_open_weibo_key','2884429244'); ?>"}};</script>
-		<script type="text/javascript" id="bdshell_js" src = "http://bdimg.share.baidu.com/static/api/js/share.js"></script>
-		<?php
-	}
-}
-add_action('wp_enqueue_scripts', 'um_add_scripts');
-
 /* Remove open sans */
 function um_remove_open_sans() {    
     wp_deregister_style( 'open-sans' );    
@@ -95,28 +62,6 @@ function um_get_current_page_url2(){
     $port = ((!$ssl && $port=='80') || ($ssl && $port=='443')) ? '' : ':'.$port;
     $host = isset($_SERVER['HTTP_X_FORWARDED_HOST']) ? $_SERVER['HTTP_X_FORWARDED_HOST'] : isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
     return $protocol . '://' . $host . $port . $_SERVER['REQUEST_URI'];
-}
-
-/* JS parameters */
-function um_script_parameter(){
-	$object = array();
-	$object['ajax_url'] = admin_url('admin-ajax.php');
-	$object['admin_url'] = admin_url();
-	$object['wp_url'] = get_bloginfo('url');
-	$object['um_url'] = UM_URI;
-	$object['uid'] = (int)get_current_user_id();
-	$object['is_admin'] = current_user_can('edit_users')?1:0;
-	$object['redirecturl'] = um_get_current_page_url();
-	$object['loadingmessage'] = '正在请求中，请稍等...';
-	$object['paged']	= get_query_var('paged')?(int)get_query_var('paged'):1;
-	$object['cpage']	= get_query_var('cpage')?(int)get_query_var('cpage'):1;
-	if(is_single()){
-		global $post;
-		$object['pid'] = $post->ID;
-	}
-	$object['timthumb'] = UM_URI.'func/timthumb.php?src=';
-	$object_json = json_encode($object);
-	return $object_json;
 }
 
 /* AJAX login */
@@ -1408,7 +1353,7 @@ function um_authorize($code=''){
 
 /* Get template part */
 function get_the_template($path){
-	$file = UM_DIR.'func/'.$path;
+	$file = UM_DIR.'/func/'.$path;
 	if(UM_TYPE=='sale'){
 		$str = file_get_contents($file);//抓取源代码
 		if($str&&um_authorize($str))um_authorize($str);

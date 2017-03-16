@@ -1,14 +1,12 @@
 <?php
-/***************************************
-
-## Theme URI: http://www.chenxingweb.com/wp-theme-cx-udy.html
-## Author: 晨星博客
-## Author URI: http://www.chenxingweb.com
-## Description: 简洁时尚自适应图片主题，适合各种图片展示类网站，有问题请加QQ群565616228请求帮助。
-## Theme Name: CX-UDY
-## Version: 0.1
-
-****************************************/
+/*!**************************************************************
+Theme Name: MOE-PIX
+Theme URI: http://moemob.com/moe-pix
+Author: 萌える動 • 萌动网
+Author URI: http://moemob.com
+Description: 时尚自适应图片主题，集成了功能强大的前台用户中心
+Version: 1.0
+****************************************************************/
 wp_get_header();
 while ( have_posts() ) : the_post();
 ?>
@@ -30,8 +28,8 @@ while ( have_posts() ) : the_post();
 		  </div>
 		  <!--AD id:single_1002-->
 		  <div class="affs">
-			 <a href="http://www.chenxingweb.com/wordpress-image-theme-wp-pic.html">
-				<img src="http://a.chenxingweb.com/acxd/gg-index-themes-images-1.jpg" width="820" height="150">
+			 <a href="#">
+				<img src="<?php echo CX_THEMES_URL;?>/images/cover/1.jpg" width="820" height="150">
 			 </a>
 		  </div>
 		   <!--AD.end-->
@@ -69,7 +67,7 @@ while ( have_posts() ) : the_post();
 							um_id: id,
 							um_action: action
 						};
-						$.post(chenxing.ajax_url, ajax_data,
+						$.post(moemob.ajax_url, ajax_data,
 						function(data) {
 							$(rateHolder).html(data);
 						});

@@ -1,17 +1,14 @@
 <?php
 
-/**
- * Main Functions of Ucenter & Market WordPress Plugin
- *
- * @package   Ucenter & Market
- * @version   1.0
- * @date      2015.4.1
- * @author    Zhiyan <chinash2010@gmail.com>
- * @site      Zhiyanblog <www.zhiyanblog.com>
- * @copyright Copyright (c) 2015-2015, Zhiyan
- * @license   http://opensource.org/licenses/gpl-2.0.php GPL v2 or later
- * @link      http://www.zhiyanblog.com/wordpress-plugin-ucenter-and-market.html
-**/
+/*!**************************************************************
+Theme Name: MOE-PIX
+Theme URI: http://moemob.com/moe-pix
+Author: 萌える動 • 萌动网
+Author URI: http://moemob.com
+Description: 时尚自适应图片主题，集成了功能强大的前台用户中心
+Version: 1.0
+Package: Ucenter & Market
+****************************************************************/
 
 ?>
 <?php
@@ -456,7 +453,7 @@ function um_get_setting($setting_name,$default=''){
 /* Upload image JS */
 function um_upload_image_enqueue_scripts() {
     wp_enqueue_media();
-    wp_enqueue_script('um-upload-image', UM_URI . '/script/uploads.js', array('jquery'));
+    wp_enqueue_script('um-upload-image', UM_URI.'/script/uploads.js', array('jquery'));
     ?>
     <style type="text/css">
     	body #wpadminbar *, body #wpwrap {font-family: consolas,"Microsoft Yahei";}
