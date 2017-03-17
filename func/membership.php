@@ -13,26 +13,25 @@ Package: Ucenter & Market
 ?>
 <?php
 //添加会员数据库
-if ( !defined('ABSPATH') ) {exit;}
-//建立数据表
-function create_membership_table(){
-	global $wpdb;
-	include_once(ABSPATH.'/wp-admin/includes/upgrade.php');
-	$table_charset = '';
-	$prefix = $wpdb->prefix;
-	$users_table = $prefix.'um_vip_users';
-	if($wpdb->has_cap('collation')) {
-		if(!empty($wpdb->charset)) {
-			$table_charset = "DEFAULT CHARACTER SET $wpdb->charset";
-		}
-		if(!empty($wpdb->collate)) {
-			$table_charset .= " COLLATE $wpdb->collate";
-		}		
-	}
-	$create_vip_users_sql="CREATE TABLE $users_table (id int(11) NOT NULL auto_increment,user_id int(11) NOT NULL,user_type tinyint(4) NOT NULL default 0,startTime datetime NOT NULL default '0000-00-00 00:00:00',endTime datetime NOT NULL default '0000-00-00 00:00:00',PRIMARY KEY (id),INDEX uid_index(user_id),INDEX utype_index(user_type)) ENGINE = MyISAM $table_charset;";
-	maybe_create_table($users_table,$create_vip_users_sql);
+function um_membership_install(){
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'um_vip';   
+    if( $wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name ) :
+		$sql = " CREATE TABLE `$table_name` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `user_id` int(11) NOT NULL,
+            `user_type` tinyint(4) NOT NULL default 0,
+            `startTime` datetime NOT NULL default '0000-00-00 00:00:00',
+            `endTime` datetime NOT NULL default '0000-00-00 00:00:00',
+            PRIMARY KEY (id),
+            INDEX uid_index(user_id),
+            INDEX utype_index(user_type)
+            ) COLLATE {$wpdb->collate};";
+		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+		dbDelta($sql);
+    endif;
 }
-add_action('admin_menu','create_membership_table');
+add_action('admin_menu','um_membership_install');
 
 //获取会员类型
 function getUserMemberType($uid=''){
@@ -44,7 +43,7 @@ function getUserMemberType($uid=''){
 	else: $id = $uid;
 	endif;
 	$prefix = $wpdb->prefix;
-	$table = $prefix.'um_vip_users';
+	$table = $prefix.'um_vip';
 	$userType=$wpdb->get_row("select * from ".$table." where user_id=".$id);
 	//0代表已过期 1代表月费会员 2代表季费会员 3代表年费会员 4代表终身会员 FALSE代表未开通过会员
 	if($userType){
@@ -67,7 +66,7 @@ function getUserMemberInfo($uid=''){
 	else: $id = $uid;
 	endif;
 	$prefix = $wpdb->prefix;
-	$table = $prefix.'um_vip_users';
+	$table = $prefix.'um_vip';
 	$userInfo=$wpdb->get_row("select * from ".$table." where user_id=".$id,'ARRAY_A');
 	if(!$userInfo){
 		$Info = array('id'=>$userInfo['id'],'user_id'=>$id,'user_type'=>'非会员','user_status'=>'未开通过会员','startTime'=>'N/A','endTime'=>'N/A');
@@ -108,7 +107,7 @@ function getUserMemberOrders($uid=''){
 	else: $id = $uid;
 	endif;
 	$prefix = $wpdb->prefix;
-	$table = $prefix.'um_orders';
+	$table = $prefix.'um_order';
 	$vip_orders=$wpdb->get_Results("select * from ".$table." where user_id=".$id." and product_id in (-1,-2,-3,-4)",'ARRAY_A');
 	return $vip_orders;
 }
@@ -167,7 +166,7 @@ function elevate_user_vip($type=1,$user_id,$user_name,$from,$to){
 	$blogname = get_bloginfo('name');
 	global $wpdb;
 	$prefix = $wpdb->prefix;
-	$table = $prefix.'um_vip_users';
+	$table = $prefix.'um_vip';
 	$userInfo=$wpdb->get_row("select * from ".$table." where user_id=".$user_id);
 	$period = 3600*24*30;
 	switch($type){
@@ -216,7 +215,7 @@ function um_manual_promotevip($user_id,$user_name,$to,$type=1,$endTime){
 	$blogname = get_bloginfo('name');
 	global $wpdb;
 	$prefix = $wpdb->prefix;
-	$table = $prefix.'um_vip_users';
+	$table = $prefix.'um_vip';
 	$userInfo=$wpdb->get_row("select * from ".$table." where user_id=".$user_id);
 	if(!$userInfo){
 		$wpdb->query( "INSERT INTO $table (user_id,user_type,startTime,endTime) VALUES ('$user_id', '$type', NOW(),'$endTime')" );

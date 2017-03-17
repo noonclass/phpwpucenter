@@ -18,19 +18,19 @@ Package: Ucenter & Market
 function um_follow_install(){
     global $wpdb;
     $table_name = $wpdb->prefix . 'um_follow';   
-    if( $wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name ) :   
+    if( $wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name ) :
 		$sql = " CREATE TABLE `$table_name` (
-			`id` int NOT NULL AUTO_INCREMENT, 
-			PRIMARY KEY(id),
-			INDEX uid_index(user_id),
-			INDEX fuid_index(follow_user_id),
+			`id` int NOT NULL AUTO_INCREMENT,
 			`user_id` int,
 			`follow_user_id` int,
 			`follow_status` int,
-			`follow_time` datetime
-		) ENGINE = MyISAM CHARSET=utf8;";
-			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');   
-			dbDelta($sql);   
+			`follow_time` datetime,
+            PRIMARY KEY(id),
+			INDEX uid_index(user_id),
+			INDEX fuid_index(follow_user_id)
+		) COLLATE {$wpdb->collate};";
+		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+		dbDelta($sql);
     endif;
 }
 add_action( 'admin_menu', 'um_follow_install' ); 

@@ -1,26 +1,62 @@
 <?php
 
-function create_orders_table(){
-		global $wpdb;
-		include_once(ABSPATH.'/wp-admin/includes/upgrade.php');
-		$table_charset = '';
-		$prefix = $wpdb->prefix;
-		$orders_table = $prefix.'um_orders';
-		$coupons_table = $prefix.'um_coupons';
-		if($wpdb->has_cap('collation')) {
-			if(!empty($wpdb->charset)) {
-				$table_charset = "DEFAULT CHARACTER SET $wpdb->charset";
-			}
-			if(!empty($wpdb->collate)) {
-				$table_charset .= " COLLATE $wpdb->collate";
-			}		
-		}
-		$create_orders_sql = "CREATE TABLE $orders_table (id int(11) NOT NULL auto_increment,order_id varchar(30) NOT NULL,trade_no varchar(30) NOT NULL,product_id int(20) NOT NULL,product_name varchar(250),order_time datetime NOT NULL default '0000-00-00 00:00:00',order_success_time datetime NOT NULL default '0000-00-00 00:00:00',order_price double(10,2) NOT NULL,order_currency varchar(20) NOT NULL default 'credit',order_quantity int(11) NOT NULL,order_total_price double(10,2) NOT NULL,order_status tinyint(4) NOT NULL default 0,order_note text,user_id int(11) NOT NULL,aff_user_id int(11),aff_rewards double(10,2),user_name varchar(60),user_email varchar(100),user_address varchar(250),user_zip varchar(10),user_phone varchar(20),user_cellphone varchar(20),user_message text,user_alipay varchar(100),PRIMARY KEY (id),INDEX orderid_index(order_id),INDEX tradeno_index(trade_no),INDEX productid_index(product_id),INDEX uid_index(user_id),INDEX affuid_index(aff_user_id)) ENGINE = MyISAM $table_charset;";
-		maybe_create_table($orders_table,$create_orders_sql);
-		$create_coupons_sql = "CREATE TABLE $coupons_table (id int(11) NOT NULL auto_increment,coupon_code varchar(20) NOT NULL,coupon_type varchar(20) NOT NULL default 'once',coupon_status int(11) NOT NULL default 1,discount_value double(10,2) NOT NULL default 0.90,expire_date datetime NOT NULL default '0000-00-00 00:00:00',PRIMARY KEY (id),INDEX couponcode_index(coupon_code)) ENGINE = MyISAM $table_charset;";
-		maybe_create_table($coupons_table,$create_coupons_sql);
+function um_store_install(){
+	global $wpdb;
+    $table_name = $wpdb->prefix . 'um_order';   
+    if( $wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name ) :
+		$sql = " CREATE TABLE `$table_name` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `order_id` varchar(30) NOT NULL,
+            `trade_no` varchar(30) NOT NULL,
+            `product_id` int(20) NOT NULL,
+            `product_name` varchar(250),
+            `order_time` datetime NOT NULL default '0000-00-00 00:00:00',
+            `order_success_time` datetime NOT NULL default '0000-00-00 00:00:00',
+            `order_price` double(10,2) NOT NULL,
+            `order_currency` varchar(20) NOT NULL default 'credit',
+            `order_quantity` int(11) NOT NULL,
+            `order_total_price` double(10,2) NOT NULL,
+            `order_status` tinyint(4) NOT NULL default 0,
+            `order_note` text,
+            `user_id` int(11) NOT NULL,
+            `aff_user_id` int(11),
+            `aff_rewards` double(10,2),
+            `user_name` varchar(60),
+            `user_email` varchar(100),
+            `user_address` varchar(250),
+            `user_zip` varchar(10),
+            `user_phone` varchar(20),
+            `user_cellphone` varchar(20),
+            `user_message` text,
+            `user_alipay` varchar(100),
+            PRIMARY KEY (id),
+            INDEX orderid_index(order_id),
+            INDEX tradeno_index(trade_no),
+            INDEX productid_index(product_id),
+            INDEX uid_index(user_id),
+            INDEX affuid_index(aff_user_id)
+            ) COLLATE {$wpdb->collate};";
+		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+		dbDelta($sql);
+    endif;
+    
+    $table_name = $wpdb->prefix . 'um_coupon';   
+    if( $wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name ) :
+		$sql = " CREATE TABLE `$table_name` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `coupon_code` varchar(20) NOT NULL,
+            `coupon_type` varchar(20) NOT NULL default 'once',
+            `coupon_status` int(11) NOT NULL default 1,
+            `discount_value` double(10,2) NOT NULL default 0.90,
+            `expire_date` datetime NOT NULL default '0000-00-00 00:00:00',
+            PRIMARY KEY (id),
+            INDEX couponcode_index(coupon_code)
+            ) COLLATE {$wpdb->collate};";
+		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+		dbDelta($sql);
+    endif;
 }
-add_action('admin_menu','create_orders_table');
+add_action('admin_menu','um_store_install');
 
 /* Add custom post type for market */
 function create_store_post_type() {
@@ -301,7 +337,7 @@ function get_user_autofill_info(){
 		$id = $current_user->ID;
 		global $wpdb;
 		$prefix = $wpdb->prefix;
-		$history_orders = $wpdb->get_Results("select * from ".$prefix."um_orders where user_id=".$id." order by id DESC",'ARRAY_A');
+		$history_orders = $wpdb->get_Results("select * from ".$prefix."um_order where user_id=".$id." order by id DESC",'ARRAY_A');
 		if($history_orders){
 			$order=$history_orders[0];
 			return $order;
@@ -323,9 +359,9 @@ function get_user_order_records($product_id=0,$user_id=0,$success_orders=0){
 		global $wpdb;
 		$prefix = $wpdb->prefix;
 		if($product_id==0):
-			if($success_orders==0){$orders=$wpdb->get_Results("select * from ".$prefix."um_orders where user_id=".$id,'ARRAY_A');}else{$orders=$wpdb->get_Results("select * from ".$prefix."um_orders where order_status=4 and user_id=".$id,'ARRAY_A');}
+			if($success_orders==0){$orders=$wpdb->get_Results("select * from ".$prefix."um_order where user_id=".$id,'ARRAY_A');}else{$orders=$wpdb->get_Results("select * from ".$prefix."um_order where order_status=4 and user_id=".$id,'ARRAY_A');}
 		else:
-			if($success_orders==0){$orders=$wpdb->get_Results("select * from ".$prefix."um_orders where user_id=".$id." and product_id=".$product_id,'ARRAY_A');}else{$orders=$wpdb->get_Results("select * from ".$prefix."um_orders where order_status=4 and user_id=".$id." and product_id=".$product_id,'ARRAY_A');}
+			if($success_orders==0){$orders=$wpdb->get_Results("select * from ".$prefix."um_order where user_id=".$id." and product_id=".$product_id,'ARRAY_A');}else{$orders=$wpdb->get_Results("select * from ".$prefix."um_order where order_status=4 and user_id=".$id." and product_id=".$product_id,'ARRAY_A');}
 		endif;
 		$record = $orders;
 	}
@@ -336,7 +372,7 @@ function get_user_order_records($product_id=0,$user_id=0,$success_orders=0){
 function get_the_order($order_id){
 	global $wpdb;
 	$prefix = $wpdb->prefix;
-	$order=$wpdb->get_row("select * from ".$prefix."um_orders where order_id=".$order_id);
+	$order=$wpdb->get_row("select * from ".$prefix."um_order where order_id=".$order_id);
 	return $order;
 }
 
@@ -377,7 +413,7 @@ function update_coupon_code_total_price($code='',$total_price=0,$ajax=1){
 	$new_total_price = $total_price;
 	global $wpdb;
 	$prefix = $wpdb->prefix;
-	$table = $prefix.'um_coupons';
+	$table = $prefix.'um_coupon';
 	$row=$wpdb->get_row("select * from ".$table." where coupon_code='".$code."'",'ARRAY_A');
 	if(!$row){
 		$msg = '优惠码不存在';
@@ -409,7 +445,7 @@ function insert_order($product_id,$product_name,$order_price='',$order_quantity,
 	date_default_timezone_set ('Asia/Shanghai');
 	global $wpdb;
 	$prefix = $wpdb->prefix;
-	$table = $prefix.'um_orders';
+	$table = $prefix.'um_order';
 	$order_id = generate_order_num();
 	$order_time = date("Y-m-d H:i:s");
 	if(empty($order_price)){$order_price_arr = product_smallest_price($product_id);$order_price=$order_price_arr[5];}
@@ -529,7 +565,7 @@ function continue_the_order(){
 	$msg = '';
 	$id = isset($_POST['id'])?(int)$_POST['id']:0;
 	global $wpdb;
-	$table_name = $wpdb->prefix . 'um_orders';
+	$table_name = $wpdb->prefix . 'um_order';
 	$order = $wpdb->get_row( "SELECT id,order_id,product_id,product_name,order_time,order_price,order_currency,order_quantity,order_total_price,order_status,user_name,user_email FROM $table_name WHERE id=".$id );
 	if($order){
 		if($order->order_currency=='credit'&&$order->order_status==1):
@@ -726,7 +762,7 @@ function send_goods_by_order($order_id,$from='',$to,$title=''){
 function add_um_couponcode($p_code,$p_type,$p_discount,$p_expire_date){
 	global $wpdb;
 	$prefix = $wpdb->prefix;
-	$table = $prefix.'um_coupons';
+	$table = $prefix.'um_coupon';
 	$row=$wpdb->query("INSERT INTO $table (coupon_code,coupon_type,discount_value,expire_date) VALUES ('$p_code','$p_type','$p_discount','$p_expire_date')");
 }
 
@@ -734,7 +770,7 @@ function add_um_couponcode($p_code,$p_type,$p_discount,$p_expire_date){
 function delete_um_couponcode($p_id){
 	global $wpdb;
 	$prefix = $wpdb->prefix;
-	$table = $prefix.'um_coupons';
+	$table = $prefix.'um_coupon';
 	$row=$wpdb->query("DELETE FROM $table WHERE id='".$p_id."'");
 }
 
@@ -742,7 +778,7 @@ function delete_um_couponcode($p_id){
 function output_um_couponcode(){
 	global $wpdb;
 	$prefix = $wpdb->prefix;
-	$table = $prefix.'um_coupons';
+	$table = $prefix.'um_coupon';
 	$couponcodes = $wpdb->get_Results("SELECT * FROM $table ORDER BY id DESC",'ARRAY_A');
 	return $couponcodes;
 }
@@ -810,7 +846,7 @@ function get_um_orders( $uid=0 , $count=0, $where='', $limit=0, $offset=0 ){
 		if($where) $where = "WHERE ($where)";
 	}
 	global $wpdb;
-	$table_name = $wpdb->prefix . 'um_orders';
+	$table_name = $wpdb->prefix . 'um_order';
 	if($count){		
 		$check = $wpdb->get_var( "SELECT COUNT(*) FROM $table_name $where" );
 	}else{
@@ -828,7 +864,7 @@ function close_expire_order(){
 	if(empty($id)||!current_user_can('edit_users')){$msg='系统出错或你无权限执行该动作';}else{
 		global $wpdb;
 		$prefix = $wpdb->prefix;
-		$table = $prefix.'um_orders';
+		$table = $prefix.'um_order';
 		$id = intval($id);
 		$check = $wpdb->get_row("select * from ".$table." where id=".$id);
 		if($check){

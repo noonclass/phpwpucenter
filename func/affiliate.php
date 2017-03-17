@@ -11,24 +11,24 @@ Package: Ucenter & Market
 ?>
 <?php
 /* Create database for orders and coupon code */
-function create_withdraw_table(){
-		global $wpdb;
-		include_once(ABSPATH.'/wp-admin/includes/upgrade.php');
-		$table_charset = '';
-		$prefix = $wpdb->prefix;
-		$withdraw_table = $prefix.'um_withdraw';
-		if($wpdb->has_cap('collation')) {
-			if(!empty($wpdb->charset)) {
-				$table_charset = "DEFAULT CHARACTER SET $wpdb->charset";
-			}
-			if(!empty($wpdb->collate)) {
-				$table_charset .= " COLLATE $wpdb->collate";
-			}		
-		}
-		$create_withdraw_sql = "CREATE TABLE $withdraw_table (id int(11) NOT NULL auto_increment,user_id int(11) NOT NULL,time datetime NOT NULL default '0000-00-00 00:00:00',money double(10,2) NOT NULL default 0,balance double(10,2) NOT NULL default 0,status int(1) NOT NULL default 0,PRIMARY KEY (id)) ENGINE = MyISAM $table_charset;";
-		maybe_create_table($withdraw_table,$create_withdraw_sql);
+function um_withdraw_install(){
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'um_withdraw';   
+    if( $wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name ) :
+        $sql = " CREATE TABLE `$table_name` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `user_id` int(11) NOT NULL,
+            `time` datetime NOT NULL default '0000-00-00 00:00:00',
+            `money` double(10,2) NOT NULL default 0,
+            `balance` double(10,2) NOT NULL default 0,
+            `status` int(1) NOT NULL default 0,
+            PRIMARY KEY (id)
+            ) COLLATE {$wpdb->collate};";
+		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+		dbDelta($sql);
+    endif;
 }
-add_action('admin_menu','create_withdraw_table');
+add_action('admin_menu','um_withdraw_install');
 
 // Get withdraw records
 function um_withdraw_records($uid,$limit=0, $offset=0){
@@ -193,7 +193,7 @@ function get_um_aff_orders( $uid , $count=0, $currency='', $limit=0, $offset=0 )
 		$where .= " AND order_currency='".$currency."'"; 
 	}
 	global $wpdb;
-	$table_name = $wpdb->prefix . 'um_orders';
+	$table_name = $wpdb->prefix . 'um_order';
 	if($count){		
 		$check = $wpdb->get_var( "SELECT COUNT(*) FROM $table_name $where" );
 	}else{
@@ -208,7 +208,7 @@ function get_um_aff_sum_orders( $uid , $currency='cash', $limit=0, $offset=0 ){
 	$uid = intval($uid);
 	if( !$uid ) return;
 	global $wpdb;
-	$table_name = $wpdb->prefix . 'um_orders';
+	$table_name = $wpdb->prefix . 'um_order';
 	$sql = "SELECT user_id,SUM(order_total_price) AS total_cost,SUM(aff_rewards) AS total_rewards FROM $table_name WHERE order_status=4 AND aff_user_id=".$uid." AND order_currency='".$currency."' GROUP BY user_id ASC";
 	$check = $wpdb->get_results( $sql );
 	if($check)	return $check;
@@ -219,7 +219,7 @@ function get_um_aff_sum_orders( $uid , $currency='cash', $limit=0, $offset=0 ){
 function get_um_aff_sum_money($uid){
 	if(!$uid)return;
 	global $wpdb;
-	$table_name = $wpdb->prefix . 'um_orders';
+	$table_name = $wpdb->prefix . 'um_order';
 	$sql = "SELECT SUM(aff_rewards) FROM $table_name WHERE aff_user_id=".$uid." AND order_status=4 AND order_currency='cash'";
 	$check = $wpdb->get_var( $sql );
 	if($check) return $check;

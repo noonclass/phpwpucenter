@@ -53,12 +53,12 @@ if ( !defined( 'UM_URI' ) ) {
 
 require_once('func/functions.php');
 require_once('func/setting-api.php');
-require_once('func/affiliate.php');
-require_once('func/follow.php');
-require_once('func/membership.php');
-require_once('func/shop.php');
-require_once('func/credit.php');
-require_once('func/message.php');
+require_once('func/affiliate.php');//NOTE::<withdraw - 分销>
+require_once('func/follow.php');//NOTE::<follower & following - 社交>
+require_once('func/membership.php');//NOTE::<vip - 会员>
+require_once('func/shop.php');//NOTE::<order - 订单 & coupon - 优惠码>
+require_once('func/credit.php');//NOTE::<credit - 积分>
+require_once('func/message.php');//NOTE::<message - 消息>
 require_once('func/mail.php');
 require_once('func/meta-box.php');
 require_once('func/open-social.php');

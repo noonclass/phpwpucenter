@@ -17,21 +17,21 @@ Package: Ucenter & Market
 function um_message_install(){
     global $wpdb;
     $table_name = $wpdb->prefix . 'um_message';   
-    if( $wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name ) :   
+    if( $wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name ) :
 		$sql = " CREATE TABLE `$table_name` (
-			`msg_id` int NOT NULL AUTO_INCREMENT, 
-			PRIMARY KEY(msg_id),
-			INDEX uid_index(user_id),
-			INDEX mtype_index(msg_type),
-			INDEX mdate_index(msg_date),
+			`msg_id` int NOT NULL AUTO_INCREMENT,
 			`user_id` int,
 			`msg_type` varchar(20),
 			`msg_date` datetime,
 			`msg_title` tinytext,
-			`msg_content` text
-		) ENGINE = MyISAM CHARSET=utf8;";
-			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');   
-			dbDelta($sql);   
+			`msg_content` text,
+            PRIMARY KEY(msg_id),
+            INDEX uid_index(user_id),
+			INDEX mtype_index(msg_type),
+			INDEX mdate_index(msg_date)
+		) COLLATE {$wpdb->collate};";
+		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+		dbDelta($sql);
     endif;
 }
 add_action( 'admin_menu', 'um_message_install' ); 
