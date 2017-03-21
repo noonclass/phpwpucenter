@@ -16,8 +16,8 @@ function um_withdraw_install(){
     $table_name = $wpdb->prefix . 'um_withdraw';   
     if( $wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name ) :
         $sql = " CREATE TABLE `$table_name` (
-            `id` int(11) NOT NULL AUTO_INCREMENT,
-            `user_id` int(11) NOT NULL,
+            `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            `user_id` bigint(20) NOT NULL default '0',
             `time` datetime NOT NULL default '0000-00-00 00:00:00',
             `money` double(10,2) NOT NULL default 0,
             `balance` double(10,2) NOT NULL default 0,

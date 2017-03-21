@@ -18,14 +18,14 @@ function um_membership_install(){
     $table_name = $wpdb->prefix . 'um_vip';   
     if( $wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name ) :
 		$sql = " CREATE TABLE `$table_name` (
-            `id` int(11) NOT NULL AUTO_INCREMENT,
-            `user_id` int(11) NOT NULL,
+            `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            `user_id` bigint(20) NOT NULL default '0',
             `user_type` tinyint(4) NOT NULL default 0,
             `startTime` datetime NOT NULL default '0000-00-00 00:00:00',
             `endTime` datetime NOT NULL default '0000-00-00 00:00:00',
             PRIMARY KEY (id),
-            INDEX uid_index(user_id),
-            INDEX utype_index(user_type)
+            INDEX uid_index (user_id),
+            INDEX utype_index (user_type)
             ) COLLATE {$wpdb->collate};";
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 		dbDelta($sql);

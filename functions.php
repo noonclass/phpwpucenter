@@ -16,6 +16,9 @@ if ( !defined( 'CX_THEME' ) )
 if ( !defined( 'CX_FUNCT' ) ) 
 	define('CX_FUNCT', get_template_directory().'/inc/functions/');
 
+if ( !defined( 'CX_WGETS' ) ) 
+	define('CX_WGETS', get_template_directory().'/widgets/');
+
 if ( !defined( 'home_cx' ) )
 	define('home_cx', home_url());
 
@@ -120,7 +123,11 @@ require CX_FUNCT .'termmeta_feild.php'; //分类字段
 require CX_FUNCT .'postmeta_feild.php'; //文字字段
 require CX_FUNCT .'options_config.php'; //配置文件
 require CX_FUNCT .'comment-template.php';//评论模板
-require CX_FUNCT .'cx-widgets.php';//小工具引入
+require CX_FUNCT .'covers_config.php';//封面人物 - Cover
+
+require CX_WGETS .'cx-widgets.php';//小工具引入
+require CX_WGETS .'pay.php';//小工具引入
+require CX_WGETS .'cover.php';//小工具引入
 
 
 /* Add JS and CSS - 加载前端脚本及样式
@@ -132,8 +139,7 @@ function ality_scripts() {
         wp_enqueue_script( 'jquery' );
     }
     
-    // Main
-	wp_enqueue_style( 'style', get_stylesheet_uri());
+    // 3rd
 	wp_enqueue_style( 'awesome', CX_THEMES_URL. '/style/awesome.min.css', false, '4.5.0' );
     wp_enqueue_style( 'bxslider', CX_THEMES_URL . '/style/bxslider.min.css', false, '3.3.4' );
     wp_enqueue_style( 'bootstrap', CX_THEMES_URL . '/style/bootstrap.min.css', false, '3.3.4' );
@@ -141,7 +147,6 @@ function ality_scripts() {
     wp_enqueue_script( 'lazyload', CX_THEMES_URL . '/script/lazyload.min.js', array('jquery'), '1.9.7', true);
     wp_enqueue_script( 'bxslider', CX_THEMES_URL . '/script/bxslider.min.js', array('jquery'), '4.2.12', true);
     wp_enqueue_script( 'bootstrap', CX_THEMES_URL . '/script/bootstrap.min.js', array('jquery'), '3.3.4', true);
-    wp_enqueue_script( 'global', CX_THEMES_URL . '/script/global.js', array('jquery'), '1.9.7', true);
     
     // UM
     if(is_author()){
@@ -152,6 +157,10 @@ function ality_scripts() {
     
     wp_enqueue_style( 'um', CX_THEMES_URL.'/style/um.css' );
     wp_enqueue_script( 'um', CX_THEMES_URL.'/script/um.js', array('jquery'), '1.2.0', true );
+    
+    // Main
+    wp_enqueue_style( 'style', get_stylesheet_uri());
+    wp_enqueue_script( 'global', CX_THEMES_URL . '/script/global.js', array('jquery'), '1.9.7', true);
 }
 add_action( 'wp_enqueue_scripts', 'ality_scripts' );
 

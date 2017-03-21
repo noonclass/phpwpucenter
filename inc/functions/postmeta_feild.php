@@ -119,7 +119,11 @@ class ashuwp_postmeta_feild extends ashuwp_framework_core {
           }elseif( in_array( $ashu_meta['type'], array('open','close','title') ) ){
             continue;
           }else{
-            $data = htmlspecialchars($_POST[$ashu_meta['id']], ENT_QUOTES,"UTF-8");
+              if(isset($_POST[$ashu_meta['id']])){
+                $data = htmlspecialchars($_POST[$ashu_meta['id']], ENT_QUOTES,"UTF-8");
+              }else{
+                $data = '';
+              }
           }
           
           if($data == "")

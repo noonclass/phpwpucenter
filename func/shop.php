@@ -5,21 +5,21 @@ function um_store_install(){
     $table_name = $wpdb->prefix . 'um_order';   
     if( $wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name ) :
 		$sql = " CREATE TABLE `$table_name` (
-            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
             `order_id` varchar(30) NOT NULL,
             `trade_no` varchar(30) NOT NULL,
-            `product_id` int(20) NOT NULL,
+            `product_id` bigint(20) NOT NULL default '0',
             `product_name` varchar(250),
             `order_time` datetime NOT NULL default '0000-00-00 00:00:00',
             `order_success_time` datetime NOT NULL default '0000-00-00 00:00:00',
             `order_price` double(10,2) NOT NULL,
             `order_currency` varchar(20) NOT NULL default 'credit',
-            `order_quantity` int(11) NOT NULL,
+            `order_quantity` bigint(20) NOT NULL default '0',
             `order_total_price` double(10,2) NOT NULL,
             `order_status` tinyint(4) NOT NULL default 0,
             `order_note` text,
-            `user_id` int(11) NOT NULL,
-            `aff_user_id` int(11),
+            `user_id` bigint(20) NOT NULL default '0',
+            `aff_user_id` bigint(20),
             `aff_rewards` double(10,2),
             `user_name` varchar(60),
             `user_email` varchar(100),
@@ -30,11 +30,11 @@ function um_store_install(){
             `user_message` text,
             `user_alipay` varchar(100),
             PRIMARY KEY (id),
-            INDEX orderid_index(order_id),
-            INDEX tradeno_index(trade_no),
-            INDEX productid_index(product_id),
-            INDEX uid_index(user_id),
-            INDEX affuid_index(aff_user_id)
+            INDEX orderid_index (order_id),
+            INDEX tradeno_index (trade_no),
+            INDEX productid_index (product_id),
+            INDEX uid_index (user_id),
+            INDEX affuid_index (aff_user_id)
             ) COLLATE {$wpdb->collate};";
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 		dbDelta($sql);
@@ -43,14 +43,14 @@ function um_store_install(){
     $table_name = $wpdb->prefix . 'um_coupon';   
     if( $wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name ) :
 		$sql = " CREATE TABLE `$table_name` (
-            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
             `coupon_code` varchar(20) NOT NULL,
             `coupon_type` varchar(20) NOT NULL default 'once',
-            `coupon_status` int(11) NOT NULL default 1,
+            `coupon_status` tinyint(4) NOT NULL default 1,
             `discount_value` double(10,2) NOT NULL default 0.90,
             `expire_date` datetime NOT NULL default '0000-00-00 00:00:00',
             PRIMARY KEY (id),
-            INDEX couponcode_index(coupon_code)
+            INDEX couponcode_index (coupon_code)
             ) COLLATE {$wpdb->collate};";
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 		dbDelta($sql);
@@ -849,11 +849,12 @@ function get_um_orders( $uid=0 , $count=0, $where='', $limit=0, $offset=0 ){
 	$table_name = $wpdb->prefix . 'um_order';
 	if($count){		
 		$check = $wpdb->get_var( "SELECT COUNT(*) FROM $table_name $where" );
+        return $check;
 	}else{
-		$check = $wpdb->get_results( "SELECT id,order_id,product_name,order_time,order_price,order_quantity,order_total_price,order_status,user_name FROM $table_name $where ORDER BY id DESC LIMIT $offset,$limit" );
+		$check = $wpdb->get_results( "SELECT id,order_id,product_name,order_time,order_price,order_quantity,order_total_price,order_status,user_id,user_name FROM $table_name $where ORDER BY id DESC LIMIT $offset,$limit" );
 	}
 	if($check)	return $check;
-	return 0;
+	return array();
 }
 
 // 关闭过期订单

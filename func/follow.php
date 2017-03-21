@@ -20,14 +20,14 @@ function um_follow_install(){
     $table_name = $wpdb->prefix . 'um_follow';   
     if( $wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name ) :
 		$sql = " CREATE TABLE `$table_name` (
-			`id` int NOT NULL AUTO_INCREMENT,
-			`user_id` int,
-			`follow_user_id` int,
+			`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			`user_id` bigint(20) NOT NULL default '0',
+			`follow_user_id` bigint(20) NOT NULL default '0',
 			`follow_status` int,
 			`follow_time` datetime,
-            PRIMARY KEY(id),
-			INDEX uid_index(user_id),
-			INDEX fuid_index(follow_user_id)
+            PRIMARY KEY (id),
+			INDEX uid_index (user_id),
+			INDEX fuid_index (follow_user_id)
 		) COLLATE {$wpdb->collate};";
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 		dbDelta($sql);

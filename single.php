@@ -20,11 +20,10 @@ while ( have_posts() ) : the_post();
 		  </div>
 		  <div class="item_info">
 			<div style="float:left;"> 
-				 <i class="fa fa-eye"></i> <span><?php echo Bing_get_views();?></span> 人气 / 
-				 <i class="fa fa-comment"></i> <span><?php comments_popup_link( '0', '1', '%' ); ?></span> 评论 / 
-				 <i class="fa fa-clock-o"></i> <span><?php the_time('Y-n-j');?></span> 发布
+				发布时间：<span><?php the_time('Y-n-j H:i:s');?></span> / 
+                评论：<span><?php comments_popup_link( '0', '1', '%' ); ?></span> / 
+                标签：<span class="tags_block"><?php the_tags('',',&nbsp;',''); ?></span> 
 			 </div>
-			<div class="post_au"> Author：<?php the_author_posts_link();?></div>
 		  </div>
 		  <!--AD id:single_1002-->
 		  <div class="affs">

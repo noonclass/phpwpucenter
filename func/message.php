@@ -19,16 +19,16 @@ function um_message_install(){
     $table_name = $wpdb->prefix . 'um_message';   
     if( $wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name ) :
 		$sql = " CREATE TABLE `$table_name` (
-			`msg_id` int NOT NULL AUTO_INCREMENT,
-			`user_id` int,
+			`msg_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			`user_id` bigint(20) NOT NULL default '0',
 			`msg_type` varchar(20),
 			`msg_date` datetime,
 			`msg_title` tinytext,
 			`msg_content` text,
             PRIMARY KEY(msg_id),
-            INDEX uid_index(user_id),
-			INDEX mtype_index(msg_type),
-			INDEX mdate_index(msg_date)
+            KEY uid_index (user_id),
+			KEY mtype_index (msg_type),
+			KEY mdate_index (msg_date)
 		) COLLATE {$wpdb->collate};";
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 		dbDelta($sql);

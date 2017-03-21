@@ -1,15 +1,13 @@
 <?php
-/*
-	Ucenter and Market Widget
-	
-	License: GNU General Public License v3.0
-	License URI: http://www.gnu.org/licenses/gpl-3.0.html
-	
-	Copyright: (c) 2015 知言博客 - http://www.zhiyanblog.com
-	
-		@package Ucenter and Market
-		@version 1.0
-*/
+/*!**************************************************************
+Theme Name: MOE-PIX
+Theme URI: http://moemob.com/moe-pix
+Author: 萌える動 • 萌动网
+Author URI: http://moemob.com
+Description: 时尚自适应图片主题，集成了功能强大的前台用户中心
+Version: 1.0
+Package: Ucenter & Market
+****************************************************************/
 ?>
 <?php
 class umucenter extends WP_Widget {

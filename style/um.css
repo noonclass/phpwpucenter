@@ -1,17 +1,12 @@
-/*
-
-Plugin Name: 用户中心与商城
-Plugin URI: http://www.zhiyanblog.com/wordpress-plugin-ucenter-and-market.html
-Description: 为你的网站添加用户中心与商城功能，支持用户积分系统以及支付宝支付系统，移植自um主题
-Version: 1.1
-Date: 2015.5.29
-Author: Zhiyan
-Author URI: http://www.zhiyanblog.com/
-Copyright: (c) 2015-2015 Tinection@Zhiyanblog
-License: GNU General Public License v3.0
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
-
-*/
+/*!**************************************************************
+Theme Name: MOE-PIX
+Theme URI: http://moemob.com/moe-pix
+Author: 萌える動 • 萌动网
+Author URI: http://moemob.com
+Description: 时尚自适应图片主题，集成了功能强大的前台用户中心
+Version: 1.0
+Package: Ucenter & Market
+****************************************************************/
 
 /* Basestyle */
 body.custom-font-enabled{font-family: "Microsoft Yahei",Arial !important;}
