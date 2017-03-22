@@ -1344,6 +1344,30 @@ add_action('wp_head', 'cx_seo',1);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**                                            前端功能改进增强.end                                     **/
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+/* 随机文章
+/* -------------------------------- */
+function the_random_posts($posts_num=5,$before='<li>',$after='</li>',$title=''){
+	global $wpdb;
+    if($title) $posts_num=1;
+	$sql = "SELECT ID, post_title,guid
+			FROM $wpdb->posts
+			WHERE post_status = 'publish' ";
+	$sql .= "AND post_title != '' ";
+	$sql .= "AND post_password ='' ";
+	$sql .= "AND post_type = 'post' ";
+	$sql .= "ORDER BY RAND() LIMIT 0 , $posts_num ";
+	$randposts = $wpdb->get_results($sql);
+	$output = '';
+	foreach ($randposts as $randpost) {
+		$post_title = stripslashes($randpost->post_title);
+		$permalink = get_permalink($randpost->ID);
+		$output .= $before.'<a href="'
+			. $permalink . '"  rel="bookmark" title="';
+        if($title) $post_title=$title;
+		$output .= $post_title . '">' . $post_title . '</a>';
+		$output .= $after;
+	}
+	echo $output;
+}
 
 //wp-pic的代码已全部结束，如果下面还有代码请立即删除

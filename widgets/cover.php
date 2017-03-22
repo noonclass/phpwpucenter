@@ -18,7 +18,7 @@ class mm_wg_cover extends WP_Widget {
 		extract($args);
 	?>
 		<?php echo '<div class="widget widget_cover">'; ?>
-        <?php if($instance['title'])echo $before_title.$instance['title']. $after_title; ?>
+        <?php if($instance['title'])echo '<h3>'.$instance['title'].'</h3>'; ?>
         <?php echo $this->html($instance); ?>
 		<?php echo '</div>'; ?>
 
@@ -50,13 +50,18 @@ class mm_wg_cover extends WP_Widget {
         if(isset($instance['number']))
             $post_num = absint($instance['number']);
         
-        $content = '<div class="post-cover">';
+        $content = '<div class="wrapper">';
         
         // 人物简介<DIV>
         $content .= '<div class="profile">';
         $content .= '<span class="name"><i class="fa fa-street-view"></i>'.$profile->cover_name.'</span>';
         $content .= '<span class="bio"> <i class="fa fa-pencil"></i>'.$profile->cover_biography.'</span>';
         $content .= '</div>';
+        
+        // 分隔符
+        $content .= '<h4 class="separator">';
+        $content .= '<span>Model Views</span>';
+        $content .= '</h4>';
         
         // 相关文章<DIV>
         $content .= '<ul class="related cl">';

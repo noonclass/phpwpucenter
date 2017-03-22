@@ -348,26 +348,6 @@ function um_create_nonce_callback(){
 add_action( 'wp_ajax_um_create_nonce', 'um_create_nonce_callback' );
 add_action( 'wp_ajax_nopriv_um_create_nonce', 'um_create_nonce_callback' );
 
-/* Update product traffic */
-function um_tracker_ajax_callback(){
-	if ( ! wp_verify_nonce( trim($_POST['wp_nonce']), 'check-nonce' ) ){
-		echo 'NonceIsInvalid';
-		die();
-	}
-	if( $_POST['pid']=='' ) return;
-	$pid = sanitize_text_field($_POST['pid']);
-	if(!empty($pid)){
-		$views = get_post_meta($pid,'um_post_views',true)?(int)get_post_meta($pid,'um_post_views',true):0;
-		$views++;
-		update_post_meta($pid,'um_post_views',$views);
-	}
-	echo $views;
-	//do_action( 'um_tracker_ajax_callback', $pid ); 
-	die();
-}
-add_action( 'wp_ajax_um_tracker_ajax', 'um_tracker_ajax_callback' );
-add_action( 'wp_ajax_nopriv_um_tracker_ajax', 'um_tracker_ajax_callback' );
-
 /* Author page paginate */
 function um_paginate($wp_query=''){
 	if(empty($wp_query)) global $wp_query;
@@ -698,17 +678,17 @@ add_filter('the_content','um_post_paycontent',98);
 
 
 /* Add activity button to post */
-function um_post_activity_button($content){
+function um_post_like_html($content){
 	if(!is_single()) return $content;
 	$umlikes=get_post_meta(get_the_ID(),'um_post_likes',true);
 	$umcollects=get_post_meta(get_the_ID(),'um_post_collects',true);
 	if(empty($umlikes)):$umlikes=0; endif;if(empty($umcollects)):$umcollects=0; endif;
 	$c_name = 'um_post_like_'.get_the_ID();$cookie = isset($_COOKIE[$c_name])?$_COOKIE[$c_name]:'';
-	$content .= '<div class="activity-btn"><a class="like-btn';
+	$content .= '<div class="post-like cl"><a class="like-btn';
 	if($cookie==1)$content .= ' love-yes';
-	$content .= '" pid="'.get_the_ID().'" href="javascript:;" title="赞一个"><i class="fa ';
-	if($cookie==1)$content .= 'fa-heart'; else $content .= 'fa-heart-o';
-	$content .= '">&nbsp;</i>赞一个 (<span>'.$umlikes.'</span>)</a>';
+	$content .= '" pid="'.get_the_ID().'" href="javascript:;" ><i class="fa ';
+	if($cookie==1)$content .= 'fa-thumbs-up'; else $content .= 'fa-thumbs-o-up';
+	$content .= '"></i><div class="count">点赞(<span class="counter">'.$umlikes.'</span>)</div></a>';
 	$uid = get_current_user_id();
 	if(!empty($uid)&&$uid!=0){	
 		$mycollects = get_user_meta($uid,'um_collect',true);
@@ -718,17 +698,17 @@ function um_post_activity_button($content){
 			if ($mycollect == get_the_ID()):$match++;endif;
 		}		
 		if ($match==0){
-			$content .= '<a class="collect-btn collect-no" pid="'.get_the_ID().'" href="javascript:;" uid="'.get_current_user_id().'" title="点击收藏"><i class="fa fa-star-o">&nbsp;</i>收藏 (<span>'.$umcollects.'</span>)</a>';
+			$content .= '<a class="collect-btn collect-no" pid="'.get_the_ID().'" href="javascript:;" uid="'.get_current_user_id().'" title="点击收藏"><i class="fa fa-star-o"></i><div class="count">收藏(<span>'.$umcollects.'</span>)</div></a>';
 		}else{
-			$content .= '<a class="collect-btn collect-yes remove-collect" href="javascript:;" pid="'.get_the_ID().'" uid="'.get_current_user_id().'" title="你已收藏，点击取消"><i class="fa fa-star">&nbsp;</i>收藏 (<span>'.$umcollects.'</span>)</a>';
+			$content .= '<a class="collect-btn collect-yes remove-collect" href="javascript:;" pid="'.get_the_ID().'" uid="'.get_current_user_id().'" title="你已收藏，点击取消"><i class="fa fa-star"></i><div class="count">收藏(<span>'.$umcollects.'</span>)</div></a>';
 		}
 	}else{
-		$content .= '<a class="collect-btn collect-no" title="你必须注册并登录才能收藏"><i class="fa fa-star-o">&nbsp;</i>收藏 (<span>'.$umcollects.'</span>)</a>';		
+		$content .= '<a class="collect-btn collect-no" title="你必须注册并登录才能收藏"><i class="fa fa-star-o"></i><div class="count">收藏(<span>'.$umcollects.'</span>)</div></a>';		
 	}
 	$content .= '</div>';
 	return $content;
 }
-add_filter('the_content','um_post_activity_button',99);
+add_filter('the_content','um_post_like_html',99);
 
 /* Canonical_url */
 function um_canonical_url(){

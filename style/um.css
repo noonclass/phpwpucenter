@@ -474,7 +474,7 @@ body.author .loading{background-image:url(img/loading.gif);background-position:c
 .activity-btn a.collect-btn:hover{color: #fff !important;background: #0aa284;}
 .activity-btn a.collect-btn i{font-size: 18px;}
 a.inner-buy-btn{padding:0 !important;}
-a.inner-buy-btn,a.inner-soldout,#post-price .summary-price a{color: #FF88AF !important;border-bottom: 2px solid #d8d8d8;cursor: pointer;text-decoration: none !important;}
+a.inner-buy-btn,a.inner-soldout,#post-price .summary-price a{color: #FF88AF;border-bottom: 2px solid #d8d8d8;cursor: pointer;text-decoration: none !important;}
 a.inner-buy-btn:hover,a.inner-soldout:hover,#post-price .summary-price a:hover{border-color: #FF88AF;}
 #post-price .summary-price span.dt,#pay-content .summary-content span.dt{width:68px;text-align: right;padding-right: 8px;display: inline-block;line-height: 200%;color: #000;font-weight: bold;white-space: nowrap;}
 #post-price .summary-price em{font-style: normal;}
@@ -486,7 +486,7 @@ a.inner-buy-btn:hover,a.inner-soldout:hover,#post-price .summary-price a:hover{b
 /* Alert */
 .umalert{display: none;position: fixed;top:50%;left: 50%;width: 300px;min-height: 150px;margin-top:-75px;margin-left: -150px;box-shadow: 0 0 5px rgba(0,0,0,0.1);background: #fafafa;border: 1px solid #eaeaea;z-index: 999;}
 .alert_title{padding:10px;border-bottom:1px solid #e5e5e5;margin-bottom:20px;background:#eee;}
-.alert_title h4{font-size:15px;}
+.alert_title h4{font-size:15px;margin: 0;}
 .alert_content{padding:0 10px;}
 .umalert p{line-height: 150%;font-size: 13px;text-align: center;}
 .umalert p span{padding: 0 2px;color:red;}

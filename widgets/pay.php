@@ -46,40 +46,43 @@ class mm_wg_pay extends WP_Widget {
         $price   = product_smallest_price($post_id);
         $currency   = (int)get_post_meta($post_id, 'pay_currency', true);
         $amount     = (int)get_post_meta($post_id, 'product_amount', true);
-        $content = '<div class="post-pay">';
+        $content = '<div class="wrapper">';
         
         // 购买入口<DIV>
-        $content .= '<div class="buy">';
+        $content .= '<div class="price">';
         if($price[5]>0){//$last_price
             if($currency>0){
-                $content .= '<span class="money purple" title="人民币">'.sprintf('%0.2f',$price[5]).'</span>RMB';
+                $content .= '<div class="inner-box"><span class="money purple" title="人民币">'.sprintf('%0.2f',$price[5]).'</span>RMB</div>';
             }else{
-                $content .= '<span class="money purple" title="积分">'.sprintf('%d',$price[5]).'</span>GB';
-            }
-            
-            if(count(get_user_order_records($post_id,0,1))){
-                $content .= '<a class="inner-bought" href="javascript:"><button type="button" class="btn disabled"><i class="fa fa-shopping-cart">&nbsp;</i>已购买</button></a>';
-            }
-            else if($amount>0){
-                $content .= '<a class="inner-buy-btn" data-top="false"><button type="button" class="btn btn-default"><i class="fa fa-shopping-cart">&nbsp;</i>购买</button></a>';
-            }else{
-                $content .= '<a class="inner-soldout" href="javascript:"><button type="button" class="btn disabled"><i class="fa fa-shopping-cart">&nbsp;</i>已售罄</button></a>';
+                $content .= '<div class="inner-box"><span class="money purple" title="积分">'.sprintf('%d',$price[5]).'</span>GB</div>';
             }
         }
         $content .= '</div>';
         
-        // 购买统计<DIV>
+        // 统计信息<DIV>
         $sum = get_um_orders(0, "count", "product_id = $post_id");
-        $content .= '<ul class="user-stat cl">';
+        $content .= '<ul class="stat-meta cl">';
         $content .= '<li class="border"><span class="line">'.$sum.'</span>购买人数</li>';
         $content .= '<li class="border"><span class="line">'.Bing_get_views(false).'</span>人气</li>';
         $content .= '<li ><span class="line">'.get_the_excerpt().'</span>类型</li>';
         $content .= '</ul>';
         
-        // 会员列表<DIV>
+        // 购买入口<DIV>
+        $content .= '<div class="buy">';
+        if(count(get_user_order_records($post_id,0,1))){
+            $content .= '<a class="inner-bought disabled" href="javascript:"><i class="fa fa-shopping-cart">&nbsp;</i>已购买</a>';
+        }
+        else if($amount>0){
+            $content .= '<a class="inner-buy-btn" data-top="false"><i class="fa fa-shopping-cart">&nbsp;</i>购买</a>';
+        }else{
+            $content .= '<a class="inner-soldout disabled" href="javascript:"><i class="fa fa-shopping-cart">&nbsp;</i>已售罄</a>';
+        }
+        $content .= '</div>';
+        
+        // 购买会员列表<DIV>
         $results = get_um_orders(0, 0, "product_id = $post_id", 6);
         if(count($results)>0){
-            $content .= '<ul class="user-list cl">';
+            $content .= '<ul class="buyer-list cl">';
             foreach ($results as $order){
                 $user_id = $order->user_id;
                 $name = get_user_meta($user_id,'nickname',true);

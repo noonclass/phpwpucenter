@@ -23,7 +23,7 @@ Package: Ucenter & Market
 		<div class="postlist-meta-author"><i class="fa fa-user"></i>&nbsp;<?php the_author();?></div>
 		<?php } ?>
 		<div class="postlist-meta-time"><i class="fa fa-calendar"></i>&nbsp;<?php echo date(__('Y年m月j日','um'),get_the_time('U'));?></div>
-		<div class="postlist-meta-views"><i class="fa fa-fire"></i>&nbsp;<?php echo (int)get_post_meta(get_the_ID(),'um_post_views',true); ?></div>
+		<div class="postlist-meta-views"><i class="fa fa-fire"></i>&nbsp;<?php echo (int)get_post_meta(get_the_ID(),'views',true); ?></div>
 		<div class="postlist-meta-category"><i class="fa fa-folder-open"></i>&nbsp;<?php the_category(' '); ?></div>
 		<div class="postlist-meta-comments"><?php if ( comments_open() ): ?><i class="fa fa-comments"></i>&nbsp;<a href="<?php comments_link(); ?>"><?php comments_number( '0', '1', '%' ); ?></a><?php  endif; ?></div>
 		<?php include(UM_DIR.'/template/action-meta.php'); ?>

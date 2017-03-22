@@ -35,48 +35,7 @@ while ( have_posts() ) : the_post();
 		  <div class="content">
 			<div class="content_left">
 				<?php the_content();?>
-			  <div class="tag cl">
-				<div class="single-tags-title"> Tags： </div>
-				  <div class="single-tags"><?php the_tags('','',''); ?></div> 
-				  <span class="post-like">
-				  <a href="javascript:;" data-action="ding" data-id="<?php the_ID(); ?>" class="favorite<?php if(isset($_COOKIE['bigfa_ding_'.$post->ID])) echo ' done';?>">
-				  <i class="fa fa-heart"></i> 
-					  <span class="count">
-						<?php 
-						if( get_post_meta($post->ID,'bigfa_ding',true) ){
-							echo get_post_meta($post->ID,'bigfa_ding',true);
-						} else {
-							echo '0';
-						}
-						?>
-						</span>+ 赞 </a>
-				</span>
-			  </div>
-			  <script>
-				$.fn.postLike = function() {
-					if ($(this).hasClass('done')) {
-						return false;
-					} else {
-						$(this).addClass('done');
-						var id = $(this).data("id"),
-						action = $(this).data('action'),
-						rateHolder = $(this).children('.count');
-						var ajax_data = {
-							action: "bigfa_like",
-							um_id: id,
-							um_action: action
-						};
-						$.post(moemob.ajax_url, ajax_data,
-						function(data) {
-							$(rateHolder).html(data);
-						});
-						return false;
-					}
-				};
-				$(document).on("click", ".favorite",function() {
-					$(this).postLike();
-				});
-			 </script>
+                <?php the_random_posts(1,'<div class="post-more cl">','</div>','换一篇');?>
 			</div>
 		  </div>  
 	  

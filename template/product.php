@@ -26,7 +26,7 @@ Package: Ucenter & Market
 					<?php if(has_post_thumbnail()){$large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'large');$imgsrc = $large_image_url[0];}else{$imgsrc = um_catch_first_image();} ?>
 					<img src="<?php echo um_timthumb($imgsrc,360,300); ?>" alt="<?php the_title(); ?>">
 					<div class="view-share">
-						<p class="view"><?php _e('人气：','um'); ?><?php echo (int)get_post_meta($post->ID,'um_post_views',true); ?></p>
+						<p class="view"><?php _e('人气：','um'); ?><?php echo (int)get_post_meta($post->ID,'views',true); ?></p>
 						<div class="share">
 							<div id="bdshare" class="bdsharebuttonbox baidu-share"><span><?php _e('分享：','um'); ?></span>
 								<a href="#" class="bds_qzone" data-cmd="qzone" title="<?php _e('分享到QQ空间','um'); ?>"></a>
