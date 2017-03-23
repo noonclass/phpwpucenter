@@ -64,7 +64,7 @@ Version: 1.0
 						</a>
 	        		</div>
         			<div class="header-info-content">
-	        			<a href="<?php echo admin_url();?>">管 理</a>
+	        			<a href="<?php echo um_get_user_url('index'); ?>">用户中心</a>
 	        		</div>
 				<?php }else{ ?>
              	     <div class="header-logo">
@@ -73,7 +73,7 @@ Version: 1.0
 						</a>
 	        		</div>
         			<div class="header-info-content">
-	        			<a href="<?php echo wp_login_url( get_permalink() ); ?>">登 陆</a>
+	        			<a href="<?php echo wp_login_url( get_permalink() ); ?>">登录</a>
 	        		</div>
 				<?php } ?>	
 	        	</div>

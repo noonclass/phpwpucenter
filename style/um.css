@@ -11,7 +11,7 @@ Package: Ucenter & Market
 /* Basestyle */
 body.custom-font-enabled{font-family: "Microsoft Yahei",Arial !important;}
 body.single-store a,body #main-wrap a{text-decoration: none;}
-body #main-wrap{max-width: 1000px;margin-left:auto;margin-right: auto;}
+body #main-wrap{max-width: 1180px;margin-left:auto;margin-right: auto;padding-bottom: 0;}
 .fancyimg {position:relative;padding: 8px;background: #fff;display: block;box-sizing: border-box;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;}
 .thumb-img {overflow: hidden;position: relative;}
 .thumb-img img {width: 100%;display: block;}
@@ -42,7 +42,7 @@ body.post-type-archive-store #main-wrap{background: #f1f1f1;}
 .billboard .inner {width: 100%;height: 100%;display: table-cell;vertical-align: middle;}
 .sub-billboard .inner h1 {font-size: 28px;letter-spacing: 1px;line-height: 1.2;margin-bottom: 10px;color:#fff;}
 .sub-billboard .inner p{font-size:12px;line-height:1.5;}
-.container.shop {background-color: #f1f1f1;position: relative;max-width: 1000px;margin: 0 auto;}
+.container.shop {background-color: #f1f1f1;position: relative;max-width: 1180px;margin: 0 auto;}
 .navcaret#guide {text-align: center;padding-top: 10px;background-color: #f1f1f1;position: relative;}
 .navcaret#guide ul li {float: none;display: inline-block;margin: auto 20px;margin-bottom: -1px;}
 .navcaret#guide .current-menu-item {border-bottom: 1px solid #666;}
@@ -121,8 +121,8 @@ body.post-type-archive-store #main-wrap{background: #f1f1f1;}
 #history .pay-history td, #history .pay-history th,.order-history td,.order-history th {padding: 10px;}
 #history .pay-history th,.order-history th,.orders-table th {border-top: 1px solid #d8d8d8;background-color: #f5f5f5;}
 #history .pay-history td,.order-history td,.orders-table td {border-bottom: 1px dotted #e5e5e5;color: #666;vertical-align: middle !important;}
-.shop .product .main-content .shop-sidebar {float: left;width: 240px;margin-left: -100%;border: 1px solid #e5e5e5;box-sizing: border-box;padding-bottom: 10px;}
-.shop .product .main-content .shop-sidebar h3 {padding: 0 10px;height: 48px;line-height: 48px;border-bottom: 1px solid #e5e5e5;background-color: #f9f9f9;color: #666;font-size: 12px;font-weight:normal;}
+.shop .product .main-content .shop-sidebar {float: left;width: 280px;margin-left: -100%;border: 1px solid #e5e5e5;box-sizing: border-box;padding-bottom: 10px;}
+.shop .product .main-content .shop-sidebar h3 {padding: 0 10px;height: 48px;line-height: 48px;border-bottom: 1px solid #e5e5e5;background-color: #fafafa;color: #666;font-size: 12px;font-weight:normal;}
 .shop .product .main-content .shop-sidebar h3 i {margin-right: 5px;}
 .shop .product .main-content .shop-sidebar ul li {display: block;margin-bottom: 0;line-height: 1;margin-top: 6px;}
 .shop .product .main-content .shop-sidebar ul li p{padding: 8px 10px;font-size: 12px;color:#ff6666;}
@@ -323,7 +323,7 @@ body .bd a:hover{color: #ff6666;}
 body .bd img,body .bd img:focus{outline: 0;}
 .bd .clear{clear: both;}
 .bd .clear:before,.bd .clear:after{content:"";clear: both;}
-.bd {width:100%;max-width: 1000px;margin-left: auto;margin-right: auto;}
+.bd {width:100%;max-width: 1180px;margin-left: auto;margin-right: auto;}
 .clx, .menu {zoom: 1;}
 .clx:after, .menu:after {clear: both;display: block;visibility: hidden;height: 0;content: "";font-size: 0;line-height: 0;}
 button, input, select, textarea{font-family: inherit;}
@@ -338,7 +338,7 @@ button, input, select, textarea{font-family: inherit;}
 #cover-change-inner {padding: 10px;width: 510px;border: 1px solid #fff;}
 #cover-list ul li, #cover-list ul li a {display: block;}
 #cover-list ul li {float: left;padding: 5px;width: 50%;}
-#cover-list ul li a {padding: 1px;border: 1px solid #eee;width: 240px;height: 64px;}
+#cover-list ul li a {padding: 1px;border: 1px solid #eee;width: 280px;height: 64px;}
 #cover-list #upload-cover{border-style: dashed !important;border-color: #ddd;position: relative;}
 #cover-list #upload-cover span{display:inline-block;font-size: 50px;width: 40px;height: 40px;top:50%;left: 50%;margin-left: -20px;margin-top: -25px;color:#ddd;position: absolute;line-height: 40px;}
 #cover-c-footer {margin: 10px 7px 0 7px;padding-top: 10px;border-top: 1px solid #e5e5e5;text-align: right;}
@@ -373,7 +373,7 @@ body.author .loading{background-image:url(img/loading.gif);background-position:c
 #mc-body-box{overflow: hidden;padding-right: 365px;}
 #mc-body-box.full{padding-right: 0;}
 #mc-body-box #lc{width:100%;max-width: 560px;float: left;}
-#mc-body-box.full #lc{max-width: 1000px;float: none;}
+#mc-body-box.full #lc{max-width: 1180px;float: none;}
 #mc-body-box #rb{width: 355px;position: relative;margin-right:-365px;float:right;border: 1px solid #dedede;}
 #lc #tab-bar{padding-bottom: 20px;border-bottom: 1px solid #eee;}
 #lc #tab-bar li{display: block;float: left;margin-right: 5px;overflow: hidden;}
@@ -395,7 +395,7 @@ body.author .loading{background-image:url(img/loading.gif);background-position:c
 
 /* Widgets */
 #rb-inner{border: 1px solid #fff;}
-#rb .widget-header {background-color: #F3F3F3;padding: 8px 0 10px 20px;font-size: 12px;}
+#rb .widget-header {background-color: #fafafa;padding: 8px 0 10px 20px;font-size: 12px;}
 #rb .widget-header .avatar {float: left;padding: 1px;border: 1px solid #E7E7E7;background-color: #fff;margin-right: 10px;}
 #rb .widget-header h4 {font-weight: 700;line-height: 18px;padding-top: 5px;display: inline;}
 #rb .widget-p {line-height: 16px;}
@@ -458,9 +458,9 @@ body.author .loading{background-image:url(img/loading.gif);background-position:c
 
 /* Button */
 #author-page .btn,.local-account .btn {text-indent: 0;display: inline-block;padding: 7px 12px;font-size: 12px;font-weight: 400;line-height: 1.42857143;text-align: center;white-space: nowrap;vertical-align: top;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;background-image: none;border: 1px solid transparent;border-radius: 3px;}
-#author-page .btn-success {color: #fff;background-color: #5cb85c;border-color: #4cae4c;}
+#author-page .btn-success {color: #fff;background-color: #a6c53b;border-color: #8daa2d;}
 #author-page .btn-default {color: #333;background-color: #fff;border-color: #ccc;}
-#author-page .btn-primary,.local-account .btn-primary {color: #fff;background-color: #428bca;border-color: #357ebd;}
+#author-page .btn-primary,.local-account .btn-primary {color: #fff;background-color: #ff6666;border-color: #ff7878;}
 #author-page *{box-sizing:border-box !important;}
 .btn-product {color: #fff;background: #9e5BE0;border-top: 0;box-shadow: 0 0 0 1px #EEE;border: 2px solid #fff;}
 .btn-lg {padding: 10px 16px;font-size: 18px;line-height: 1.33;border-radius: 5px;}
@@ -618,7 +618,7 @@ span.mail-notify-check{display:none;}
 /* ------------------- */
 .site{max-width:1400px !important;}
 .bd .clear:before,.bd .clear:after{clear:both;}
-body #main-wrap,.dashboard .bd{max-width:1280px;}
+body #main-wrap,.dashboard .bd{max-width:1180px;}
 body.author .dashboard .bd{
   line-height:150%;
   font: 12px/1.5 "Microsoft Yahei", Arial;
@@ -629,7 +629,7 @@ body.author .dashboard .bd{
   -moz-osx-font-smoothing: grayscale;
 }
 .dashboard .bd a{
-  color: #00c8c9;
+  color: #ff6667;
   outline: none;
   cursor: pointer;
   -webkit-transition: all 0.3s ease-out;
@@ -638,21 +638,22 @@ body.author .dashboard .bd{
 }
 .dashboard .archive a{color:#000;}
 .dashboard .primary {
-  background-color: #f9f9f9;
+  background-color: #fafafa;
   padding-bottom: 0;
   box-shadow: 0 1px 2px rgba(0,0,0,0.1);
   height: auto;
-  margin: 20px auto 30px auto;
-  padding-left: 240px;
+  margin: 0 auto 60px;
+  padding-left: 280px;
   box-sizing: border-box;
 }
 .dashboard .primary .aside {
-  width: 240px;
+  width: 280px;
   box-shadow: none;
   text-align: center;
-  background-color: #f9f9f9;
+  background-color: #fafafa;
   float: left;
-  margin-left: -240px;
+  margin-left: -280px;
+  border-right: 1px solid #e5e5e5;
 }
 .dashboard .primary .aside .user-avatar {
   border-bottom: 1px solid #e5e5e5;
@@ -687,25 +688,25 @@ body.author .dashboard .bd{
 .dashboard .primary .aside .menus ul li a:hover {color: #999;background: #f5f5f5;}
 .dashboard .primary .aside .menus ul li:last-child a{border-bottom:0;}
 .dashboard .primary .aside .menus ul li.active a {
-  color: #00c8c9;
+  color: #ff6667;
   background: #fff;
-  border-left: 3px solid #00c8c9;
+  border-left: 3px solid #ff6667;
   margin-left: -1px;
 }
 .dashboard .primary .aside .menus ul li a i {margin-right: 8px;}
 .dashboard .primary .area {
+  margin-left: -1px;
   margin-bottom: 0;
   width: 100%;
-  background-color: inherit;
+  background-color: #FFF;
   -webkit-box-shadow: none;
   box-shadow: none;
+  min-height:810px;
+  border-left: 1px solid #e5e5e5;
   overflow:hidden;
 }
 .dashboard .primary .area .page-wrapper {
-  margin-left: 0;
-  background-color: #FFF;
   box-shadow: none;
-  border-left: 1px solid #e5e5e5;
 }
 .dashboard .primary .area .page-wrapper .dashboard-main {
   padding: 20px 30px;
@@ -762,13 +763,13 @@ body.author .dashboard .bd{
 .briefly ul li .visual {
   float: left;
   font-size: 40px;
-  margin: 15px;
+  margin: 15px 0 15px 15px;
   line-height:1.5;
 }
 .briefly ul li .number {
   float: right;
-  margin: 15px;
-  font-size: 30px;
+  margin: 15px 15px 15px 0;
+  font-size: 24px;
   text-align: right;
   line-height:1.5;
 }
@@ -831,6 +832,7 @@ body.author .dashboard .bd{
 .dashboard .primary .area .fast-navigation ul li {
   margin-bottom: 0;
   float: left;
+  list-style: outside none none;
   border-right: 1px solid #e5e5e5;
 }
 .dashboard .primary .area .fast-navigation ul li a {
@@ -869,3 +871,15 @@ body.author .dashboard .bd{
 
 /* -------- Tab coupon ---------- */
 .dashboard #author-page #couponform .btn{margin-top:10px;}
+
+ @media only screen and (max-width:600px) {
+.dashboard .primary{padding-left:0;}
+.dashboard .primary .aside {width: 100%;margin-left: 0;border-bottom: 1px solid #ddd;}
+.dashboard .primary .aside .user-avatar img {margin: auto 0 auto 30px;float: left;}
+.dashboard .primary .aside .user-avatar h2 {margin: 10px auto;}
+.dashboard .primary .aside .menus ul li {display: inline-block;margin: 2px;border: 1px solid #e5e5e5;border-radius: 50%;}
+.dashboard .primary .aside .menus ul li a {border: medium none !important;}
+.dashboard .primary .aside .menus ul li a:hover {border-radius: 50% !important;}
+.dashboard .primary .aside .menus ul li.active a {border-radius: 50%;}
+.dashboard .primary .area .fast-navigation ul li a {width: 80px;}
+ }
