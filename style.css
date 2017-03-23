@@ -365,7 +365,6 @@ hr{margin-top:20px;border:0;border-top:1px solid #eee}
 .widget_pay .price .inner-box{width:80px;height: 80px;line-height: 60px;text-align: center;}
 .widget_pay .price .inner-box{background-color: #f5f3f3;border: 1px solid #e8e6e6;border-radius: 50%;display: inline-block;padding: 5px;}
 .widget_pay .price .inner-box .money{font-family: Georgia;font-size: 28px;padding: 0 2px;}
-.widget_pay .price .inner-box .grass{color: #a6c53b;}
 .widget_pay .price .inner-box .purple{color: #cc0065;}
 .widget_pay .stat-meta{list-style: outside none none;line-height: 22px;padding: 10px 0;}
 .widget_pay .stat-meta li {float: left;text-align: center;width: 33%;}
@@ -441,6 +440,21 @@ footer{height:130px;background:#fff;border-top:1px solid #C5C5C5}
 .fax a:before{font-family:FontAwesome;display:inline-block;margin-right:5px}
 .codiepie a:before{content:"\f184";color:#f66}
 .fa-homes a:before{content:"\f015";color:#f66}
+.width-full{width:100%}
+.header-logo{display:block;text-align:center;padding:32px 12px 24px;}
+.header-logo img{width:72px;height:72px}
+.auth-form{margin: 0 auto;max-width: 320px;font-size:14px;}
+.auth-form h2{font-size: 24px;font-weight: 300;margin: 0 auto 15px;text-align: center;}
+.auth-form-body {background-color: #fff;border-radius: 5px;border: 1px solid #d0d0d0;padding: 20px;font-size: 14px;}
+.auth-form-body label{font-weight: 600;display: block;margin-bottom: 7px;}
+.btn-primary {background-color: #ff6666;background-image: linear-gradient(-180deg, #ff7878 0%, #ff6666 90%);color: #fff;}
+.btn-primary:focus, .btn-primary.focus {box-shadow: 0 0 0 0.2em rgba(192, 208, 88, 0.3);}
+.btn-primary:hover, .btn-primary.hover {background-color: #da4f49;background-image: linear-gradient(-180deg, #e06761 0%, #da4f49 90%);border-color: rgba(128, 31, 35, 0.5);}
+.site-footer-links {text-align: center;font-size: 12px;}
+.site-footer-links li {display: inline-block;line-height: 16px;}
+.site-footer-links li + li {margin-left: 10px;}
+.site-footer-links a {color: #9b9b9b;}
+.site-footer-links a:hover {text-decoration: underline;}
 @media (max-width:1180px){.foot_num{line-height:40px;padding-top:15px;text-align:center}
 .foot_num div:nth-child(1){font-size:18px;float:none;width:auto;text-align:center}
 .foot_num div:nth-child(2){float:none;margin-left:0}

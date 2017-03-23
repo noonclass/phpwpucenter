@@ -851,7 +851,7 @@ function get_um_orders( $uid=0 , $count=0, $where='', $limit=0, $offset=0 ){
 		$check = $wpdb->get_var( "SELECT COUNT(*) FROM $table_name $where" );
         return $check;
 	}else{
-		$check = $wpdb->get_results( "SELECT id,order_id,product_name,order_time,order_price,order_quantity,order_total_price,order_status,user_id,user_name FROM $table_name $where ORDER BY id DESC LIMIT $offset,$limit" );
+		$check = $wpdb->get_results( "SELECT id,order_id,product_id,product_name,order_time,order_price,order_quantity,order_total_price,order_status,user_id,user_name FROM $table_name $where ORDER BY id DESC LIMIT $offset,$limit" );
 	}
 	if($check)	return $check;
 	return array();

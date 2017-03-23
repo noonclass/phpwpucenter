@@ -1370,4 +1370,42 @@ function the_random_posts($posts_num=5,$before='<li>',$after='</li>',$title=''){
 	echo $output;
 }
 
+function get_plain_header(){
+    $output = '';
+    $output .= '<!DOCTYPE html>';
+    $output .= '<html>';
+    $output .= '<head>';
+        $output .= '<meta charset="'.get_bloginfo( 'charset' ).'">';
+        $output .= '<meta name="viewport" content="initial-scale=1.0,user-scalable=no"> ';
+        $output .= wp_head();
+        $output .= '<!--[if lt IE 9]> ';
+        $output .= '<script src="http://apps.bdimg.com/libs/html5shiv/3.7/html5shiv.min.js"></script> ';
+        $output .= '<![endif]--> ';
+    $output .= '</head>';
+    $output .= '<body class="home logged-out page-responsive">';
+        $output .= '<div class="header header-logged-out width-full pt-5 pb-4" role="banner">';
+        $output .= '<div class="container clearfix width-full">';
+        $output .= '<a class="header-logo" href="'.home_cx.'">';
+		$output .= '<img src="'.CX_THEMES_URL.'/images/logo_cc.png" alt="'.get_bloginfo('name').'" />';
+        $output .= '</a>';
+        $output .= '</div>';
+        $output .= '</div>';
+    echo $output;
+}
+
+function get_plain_footer(){
+    $output = '';
+        $output .= '<div class="site-footer" role="contentinfo">';
+        $output .= '<ul class="site-footer-links">';
+        $output .= '<li><a href="'.get_bloginfo('url').'/terms">Terms</a></li>';
+        $output .= '<li><a href="'.get_bloginfo('url').'/privacy">Privacy</a></li>';
+        $output .= '<li><a href="'.get_bloginfo('url').'/security">Security</a></li>';
+        $output .= '<li><a href="'.get_bloginfo('url').'/contact"">Contact</a></li>';
+        $output .= '</ul>';
+        $output .= '</div>';
+    $output .= '</body>';
+    $output .= '</html>';
+    echo $output;
+}
+
 //wp-pic的代码已全部结束，如果下面还有代码请立即删除

@@ -76,7 +76,7 @@ class mm_wg_cover extends WP_Widget {
         while ( $query->have_posts() ) {
             $query->the_post();
             //cx_themes_switch(2001, $query->post);
-            $content .= '<li><a class="link" href="'.get_the_permalink().'" target="_blank">';
+            $content .= '<li><a class="link" href="'.get_the_permalink().'">';
 			$content .= '<img src="'.cx_timthumb(380,170,'380x170', 0, false).'" alt="'.get_the_title().'" width="270" height="120">';
 			$content .= '</a></li>';
         }

@@ -143,7 +143,7 @@ add_action( 'wp_ajax_nopriv_ajax_register', 'um_ajax_register' );
 /* Add captcha in login page
 /* -------------------------- */
 function um_add_register_captcha(){
-	$captcha = UM_URI.'/template/captcha.php';
+	$captcha = UM_URI.'/func/captcha.php';
 	?>
 	<p style="overflow:hidden;">
 		<label for="um_captcha">验证码<br>

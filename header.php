@@ -36,10 +36,10 @@ Version: 1.0
 				<div class="login_text pc" style="padding-top: 25px;">
 				<?php if ( is_user_logged_in() ) {?>
 					<a class="rlogin reg_hre_btn" href="<?php echo wp_logout_url( get_permalink() ); ?>">退出</a>
-					<a class="rlogin login_hre_btn" href="<?php echo admin_url();?>">管理</a>
+					<a class="rlogin login_hre_btn" href="<?php echo um_get_user_url('index'); ?>">用户中心</a>
 				<?php }else{ ?>
-					<a class="rlogin reg_hre_btn" href="<?php echo home_cx;?>/wp-login.php?action=register">注册</a>
-					<a class="rlogin login_hre_btn logint" href="javascript:;">登录</a>
+					<a class="rlogin reg_hre_btn sign-up" href="javascript:;">注册</a>
+					<a class="rlogin login_hre_btn sign-in" href="javascript:;">登录</a>
 				<?php } ?>
 				</div>
 				<div class="login_text mobie">

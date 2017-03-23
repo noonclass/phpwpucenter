@@ -132,7 +132,7 @@ $get_tab = isset($_GET['tab']) && in_array($_GET['tab'], $tab_array) ? $_GET['ta
 					<div class="nav-title">快捷菜单</div>
 					<ul>
 						<li><a target="_blank" href="<?php echo get_author_posts_url($curauth->ID); ?>"><i class="fa fa-home"></i>我的主页</a></li>
-						<li><a href="<?php echo um_get_user_url('order',$curauth->ID); ?>"><i class="fa fa-shopping-cart"></i>我的订单</a></li>
+						<li><a href="<?php echo um_get_user_url('orders',$curauth->ID); ?>"><i class="fa fa-shopping-cart"></i>我的订单</a></li>
 						<li>
 						<?php if(is_user_logged_in()){ ?>
 						<a href="<?php echo add_query_arg(array('tab'=>'post','action'=>'new'), get_author_posts_url($current_user->ID)); ?>">

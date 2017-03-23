@@ -56,6 +56,8 @@ class mm_wg_pay extends WP_Widget {
             }else{
                 $content .= '<div class="inner-box"><span class="money purple" title="积分">'.sprintf('%d',$price[5]).'</span>GB</div>';
             }
+        }else{
+            $content .= '<div class="inner-box"><span class="money purple" title="积分">0</span>RMB</div>';
         }
         $content .= '</div>';
         
@@ -74,8 +76,10 @@ class mm_wg_pay extends WP_Widget {
         }
         else if($amount>0){
             $content .= '<a class="inner-buy-btn" data-top="false"><i class="fa fa-shopping-cart">&nbsp;</i>购买</a>';
-        }else{
+        }else if($price[5]>0){
             $content .= '<a class="inner-soldout disabled" href="javascript:"><i class="fa fa-shopping-cart">&nbsp;</i>已售罄</a>';
+        }else{
+            $content .= '<a class="inner-bought disabled" href="javascript:"><i class="fa fa-shopping-cart">&nbsp;</i>免费</a>';
         }
         $content .= '</div>';
         

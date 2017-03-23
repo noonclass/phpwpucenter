@@ -16,10 +16,29 @@ function um_check_login(){
 	if(moemob.uid>0) return true;
 	if($("div.overlay").length<=0) $("body").append('<div class="overlay"></div>');
 	$("div.overlay").show(),$("body").addClass("fadeIn");
-	$('#sign').removeClass("register").addClass("um_sign");
+    $('#sign').removeClass("register").addClass("um_sign");
+    if(arguments[0]=='reg'){$('#sign').removeClass("um_sign").addClass("register");}
 	$("div.overlay, form a.close").bind("click",function(){return $("body").removeClass("fadeIn"),$('#sign').removeAttr("class"),$("div.overlay").remove();});
 	return false;
 };
+
+// Login action
+$("a.sign-in").click(function(b){
+    b.preventDefault();
+    if(um_check_login()){
+    	calculate();
+    	$("div.overlay").length<=0?$("body").append('<div class="overlay"></div>'):$("div.overlay").show();
+    	$(".popupbox").hide(), $("#order").fadeIn();
+	}
+});
+$("a.sign-up").click(function(b){
+    b.preventDefault();
+    if(um_check_login('reg')){
+    	calculate();
+    	$("div.overlay").length<=0?$("body").append('<div class="overlay"></div>'):$("div.overlay").show();
+    	$(".popupbox").hide(), $("#order").fadeIn();
+	}
+});
 
 // 清理百度分享多余代码
 window.onload=function(){

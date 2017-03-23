@@ -29,7 +29,7 @@ function um_loginbox(){
         </p>
         <p class="safe">
             <label class="remembermetext" for="rememberme"><input name="rememberme" type="checkbox" checked="checked" id="rememberme" class="rememberme" value="forever">记住我的登录</label>
-            <a class="lost" href="<?php echo get_option('home'); ?>/wp-login.php?action=lostpassword"><?php _e('忘记密码 ?','tinection'); ?></a>
+            <a class="lost" href="<?php echo get_option('home'); ?>/lostpassword"><?php _e('忘记密码 ?','tinection'); ?></a>
         </p>
         <p>
             <input class="submit" type="submit" value="登录" name="submit">
@@ -70,9 +70,12 @@ function um_loginbox(){
             <label class="icon" for="user_pass2"><i class="fa fa-retweet"></i></label>
             <input class="input-control" type="password" id="user_pass2" name="user_pass2" placeholder="再次输入密码" required="" aria-required="true">
         </p>
-        <p id="captcha_inline">
+        <p id="captcha_inline" class="cl">
             <input class="input-control inline" type="text" id="um_captcha" name="um_captcha" placeholder="输入验证码" required>
             <img src="<?php echo UM_URI.'/images/captcha-clk.png'; ?>" class="captcha_img inline" title="点击刷新验证码">
+        </p>
+        <p>
+            <label class="note" for="privacy">单击“注册”即表示你同意本站<a href="<?php echo get_option('home'); ?>/terms">服务协议</a>以及<a href="<?php echo get_option('home'); ?>/privacy">隐私声明</a>。</label>
             <input class="submit inline" type="submit" value="注册" name="submit">
         </p>
         <a class="close"><i class="fa fa-times"></i></a>  

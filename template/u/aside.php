@@ -77,7 +77,7 @@ Package: Ucenter & Market
 			</li>
 			<?php if(current_user_can('edit_users')){ ?>
 			<li class="tab-coupon <?php if(isset($_GET['tab'])&&$_GET['tab']=='coupon') echo 'active'; ?>">
-				<a href="<?php echo um_get_user_url('coupon',$curauth->ID); ?>"><i class="fa fa-tags"></i>优惠码</a>
+				<a href="<?php echo um_get_user_url('coupon',$curauth->ID); ?>"><i class="fa fa-tags"></i>我的卡券</a>
 			</li>
 			<?php } ?>
 			<li class="tab-profile <?php if(isset($_GET['tab'])&&$_GET['tab']=='profile') echo 'active'; ?>">
