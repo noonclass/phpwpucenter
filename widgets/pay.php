@@ -52,7 +52,7 @@ class mm_wg_pay extends WP_Widget {
         $content .= '<div class="price">';
         if($price[5]>0){//$last_price
             if($currency>0){
-                $content .= '<div class="inner-box"><span class="money purple" title="人民币">'.sprintf('%0.2f',$price[5]).'</span>RMB</div>';
+                $content .= '<div class="inner-box"><span class="money purple" title="人民币">'.sprintf('%d',$price[5]).'</span>RMB</div>';
             }else{
                 $content .= '<div class="inner-box"><span class="money purple" title="积分">'.sprintf('%d',$price[5]).'</span>GB</div>';
             }

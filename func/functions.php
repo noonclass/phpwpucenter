@@ -664,10 +664,10 @@ function um_post_paycontent($content){
 			$hidden_content .= '</p>';
 		}
 		$hidden_content .= '</li>';
-		endif;
+		$hidden_content .= '</div>';
+        endif;
 		if($price[5]==0||count(get_user_order_records(get_the_ID(),0,1))>0) $hidden_content .= '<p style="margin-left:75px;">'.$pay_content.'</p>';
 		if($price[5]!=0&&count(get_user_order_records(get_the_ID(),0,1))<=0){$amount=(int)get_post_meta(get_the_ID(),'product_amount',true);$btn=$amount>0?'<a class="inner-buy-btn" data-top="false"><i class="fa fa-shopping-cart"></i>立即购买</a>':'<a class="inner-soldout" href="javascript:"><i class="fa fa-shopping-cart">&nbsp;</i>缺货不可购买</a>';$hidden_content .= '<div id="pay"><p>购买该资源后，相关内容将发送至您的邮箱！'.$btn.'</p></div>';}
-		//$hidden_content .= '</div>';
 		$see_content = empty($hidden_content)?$content:$content.'<div class="label-title post"><span id="title"><i class="fa fa-paypal"></i>&nbsp;付费资源</span>'.$hidden_content.'</div>';
 	}else{
 		$see_content = $content;
