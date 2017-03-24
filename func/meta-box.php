@@ -144,7 +144,7 @@ function um_product_info_callback($post){
 <p style="clear:both;font-weight:bold;border-bottom:1px solid #ddd;padding-bottom:8px;">
 <?php _e('付费内容','um'); ?>
 </p>
-<p style="clear:both;"><?php _e( '付费查看下载链接,一行一个,每个资源格式为资源名|资源下载链接|密码', 'um' );?></p>
+<p style="clear:both;"><?php _e( '付费查看下载链接,一行一个,每个资源格式为网盘|资源名|资源下载链接|密码', 'um' );?></p>
 <textarea name="product_download_links" rows="5" class="large-text code"><?php echo $download_links;?></textarea>
 <p style="clear:both;"><?php _e( '付费查看的内容信息', 'um' );?></p>
 <textarea name="product_pay_content" rows="5" class="large-text code"><?php echo $pay_content;?></textarea>

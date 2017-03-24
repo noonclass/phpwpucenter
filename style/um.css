@@ -872,6 +872,21 @@ body.author .dashboard .bd{
 /* -------- Tab coupon ---------- */
 .dashboard #author-page #couponform .btn{margin-top:10px;}
 
+.pay-wrapper{border: 1px dashed #ff9a9a;margin: 10px 0;padding: 8px;overflow: hidden;}
+.pay-wrapper .pay i{padding:0 4px;}
+.pay-wrapper .pay a{padding:0 4px!important; border-bottom:none;}
+.pay-wrapper .pay ul,.pay-wrapper .pay ul li{display: inline;}
+.pay-wrapper ul li{margin:8px auto;display:block;}
+.pay-wrapper ul li span{margin:0 5px;}
+.pay-wrapper ul li span.res{opacity: 0.8;background-color: #ed6565;color:#fff;border-radius: 4px;padding:6px;}
+.pay-wrapper ul li span.res:hover{opacity: 1;}
+.pay-wrapper ul li span a{padding-left:5px;color:#fff;}
+.pay-wrapper ul li span a:hover{color:#fff;}
+.pay-wrapper .pay-price span{margin:0;}
+.pay-wrapper .pay-price span.money{font-family: Georgia;padding: 0 2px;}
+.pay-wrapper .pay-price span.purple{color: #cc0065;}
+.pay-wrapper .pay-content{border-top:1px solid #eee;padding: 8px;}
+
  @media only screen and (max-width:600px) {
 .dashboard .primary{padding-left:0;}
 .dashboard .primary .aside {width: 100%;margin-left: 0;border-bottom: 1px solid #ddd;}

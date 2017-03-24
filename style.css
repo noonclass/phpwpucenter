@@ -362,8 +362,9 @@ hr{margin-top:20px;border:0;border-top:1px solid #eee}
 .widget_pay{background:#fff;padding:30px 10px 10px}
 .widget_pay h2{display: none;margin-top: 10px;font-size: 18px;}
 .widget_pay .price{height: 100px;text-align: center;}
-.widget_pay .price .inner-box{width:80px;height: 80px;line-height: 60px;text-align: center;}
-.widget_pay .price .inner-box{background-color: #f5f3f3;border: 1px solid #e8e6e6;border-radius: 50%;display: inline-block;padding: 5px;}
+.widget_pay .price .inner-box{width:80px;height: 80px;line-height: 60px;text-align: center;background:#f5f3f3 url(images/currency_gb.png) no-repeat 50% 50%;}
+.widget_pay .price .inner-box{border: 1px solid #e8e6e6;border-radius: 50%;display: inline-block;padding: 5px;}
+.widget_pay .price .inner-box.rmb{background-image:url(images/currency_rmb.png);}
 .widget_pay .price .inner-box .money{font-family: Georgia;font-size: 28px;padding: 0 2px;}
 .widget_pay .price .inner-box .purple{color: #cc0065;}
 .widget_pay .stat-meta{list-style: outside none none;line-height: 22px;padding: 10px 0;}

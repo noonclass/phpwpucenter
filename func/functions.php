@@ -613,31 +613,35 @@ function get_cat_ids(){
 function um_post_source_price($postid){
 	$price = product_smallest_price($postid);
 	$currency = get_post_meta($postid,'pay_currency',true);
-	$content = '<div id="post-price">';
-	if($price[3]==0&&$price[4]==0){
-		$content .= '<li class="summary-price"><span class="dt">售价 :</span>';
-		if($currency==1) $content .= '<em>¥</em><strong>'.sprintf('%0.2f',$price[0]).'</strong><em>(元)</em>'; else $content .= '<em><i class="fa fa-gift"></i></em><strong>'.sprintf('%0.2f',$price[0]).'</strong><em>(积分)</em>';
+    $cunit = ($currency>0)?'RMB':'积分';
+    $format = ($currency>0)?'%0.2f':'%d';
+	$content = '<ul class="pay-price">';
+	if($price[3]==0&&$price[4]==0){//无VIP价格的情况
+		$content .= '<li class="summary-price"><span class="dt">售价 : </span>';
+		$content .= '<span class="money purple">'.sprintf($format,$price[0]).'</span>'.$cunit;
 		$content .= '</li>';
-	}else{ 
-		$content .= '<li class="summary-price"><span class="dt">售价 :</span>';
-		if($currency==1) $content .= '<em>¥</em><strong><del>'.sprintf('%0.2f',$price[0]).'</del></strong><em>(元)</em>'; else $content .= '<em><i class="fa fa-gift"></i></em><strong><del>'.sprintf('%0.2f',$price[0]).'</del></strong><em>(积分)</em>';
+	}else{
+		$content .= '<li class="summary-price"><span class="dt">售价 : </span>';
+		$content .= '<span class="money purple"><del>'.sprintf($format,$price[0]).'</del></span>'.$cunit;
 		if($price[4]!=0){
-			$content .= '<strong>&nbsp;'.sprintf('%0.2f',$price[2]).'</strong><span>(限时优惠)</span>';
+			$content .= '<span class="money purple">&nbsp;'.sprintf($format,$price[2]).'</span>'.$cunit.'<span>(限时优惠)</span>';
 		}
-			$content .= '</li>';
+		$content .= '</li>';
 		if($price[3]!=0){
-			$content .= '<li class="summary-price"><span class="dt">会员价格 :</span>';
+			$content .= ' / <li class="summary-price"><span class="dt">会员价 : </span>';
 			if(getUserMemberType()) { 
-				if($currency==1) $content .= '<em>¥</em><strong>'.sprintf('%0.2f',$price[1]).'</strong><em>(元)</em>'; else $content .= '<em><i class="fa fa-gift"></i></em><strong>'.sprintf('%0.2f',$price[1]).'</strong><em>(积分)</em>';
+				$content .= '<span class="money purple">'.sprintf($format,$price[1]).'</span>'.$cunit;
 			}else if(is_user_logged_in()){
-				$content .= sprintf(__('非 <a href="%1$s" target="_blank" title="开通会员">会员</a> 不能享受该优惠','um'),um_get_user_url('membership'));
-			} else {
-				if($currency==1) $content .= '<em>¥</em><strong>'.sprintf('%0.2f',$price[6]).'</strong><em>(元)</em>'; else $content .= '<em><i class="fa fa-gift"></i></em><strong>'.sprintf('%0.2f',$price[6]).'</strong><em>(积分)</em>';$content .= '<a href="javascript:" class="user-login">登录</a> 查看实际享受优惠';
+                $content .= '<span class="money purple">'.sprintf($format,$price[6]).'</span>'.$cunit;
+				$content .= sprintf(__('<a href="%1$s" target="_blank">开通会员</a>享受该优惠','um'),um_get_user_url('membership'));
+			} else {//NOTE::dead block-未登录不再显示
+				$content .= '<span class="money purple">'.sprintf($format,$price[6]).'</span>'.$cunit;
+                $content .= '<a href="javascript:" class="user-login">登录</a>查看实际享受优惠';
 			}
 			$content .= '</li>';
 		}
 	}
-	$content .= '</div>';
+	$content .= '</ul>';
 	return $content;
 }
 
@@ -647,28 +651,44 @@ function um_post_paycontent($content){
 	if(is_single()&&get_post_type()=='post'){
 		$price = product_smallest_price(get_the_ID());
 		$dl_links = get_post_meta(get_the_ID(),'product_download_links',true);
-		$pay_content = get_post_meta(get_the_ID(),'product_pay_content',true);
-		if(!count(get_user_order_records(get_the_ID(),0,1))) $hidden_content .= um_post_source_price(get_the_ID());
-		if(!empty($dl_links)):
-		$hidden_content .= '<div id="pay-content"><li class="summary-content"><span class="dt" style="position:absolute;top:0;left:0;">资源信息 :</span>';
-		$arr_links = explode(PHP_EOL,$dl_links);
-		foreach($arr_links as $arr_link){
-			$arr_link = explode('|',$arr_link);
-			$arr_link[0] = isset($arr_link[0]) ? $arr_link[0]:'';
-			$arr_link[1] = isset($arr_link[1]) ? $arr_link[1]:'';
-			$arr_link[2] = isset($arr_link[2]) ? $arr_link[2]:'';
-			$hidden_content .= '<p style="margin:0 0 0 75px;">'.$arr_link[0].'</p><p style="margin:0 0 0 75px;">下载链接：';
-			if($price[5]==0||count(get_user_order_records(get_the_ID(),0,1))>0){$hidden_content .= '<a href="'.$arr_link[1].'" title="'.$arr_link[0].'" target="_blank">'.$arr_link[1].'</a>';}else{$hidden_content .= '*** 隐藏内容购买后可见 ***';}
-			$hidden_content .= '&nbsp;&nbsp;下载密码：';
-			if($price[5]==0||count(get_user_order_records(get_the_ID(),0,1))>0){$hidden_content .= $arr_link[2];}else{$hidden_content .= '*** 隐藏内容购买后可见 ***';}
-			$hidden_content .= '</p>';
-		}
-		$hidden_content .= '</li>';
-		$hidden_content .= '</div>';
+		if(!empty($dl_links))://付费链接直接输出
+            $hidden_content .= '<ul class="pay-resource">';
+            $arr_links = explode(PHP_EOL,$dl_links);
+            foreach($arr_links as $arr_link){
+                $arr_link = explode('|',$arr_link);
+                $arr_link[0] = isset($arr_link[0]) ? $arr_link[0]:'';
+                $arr_link[1] = isset($arr_link[1]) ? $arr_link[1]:'';
+                $arr_link[2] = isset($arr_link[2]) ? $arr_link[2]:'';
+                $arr_link[3] = isset($arr_link[3]) ? $arr_link[3]:'';
+                $hidden_content .= '<li class="line">';
+                $hidden_content .= '<span class="res fa fa-cloud-download"><a href="'.$arr_link[2].'" title="'.$arr_link[1].'" target="_blank">'.$arr_link[0].'</a></span>';
+                $hidden_content .= '<span class="code">'.$arr_link[3].'</span>';
+                $hidden_content .= '</li>';
+            }
+            $hidden_content .= '</ul>';
         endif;
-		if($price[5]==0||count(get_user_order_records(get_the_ID(),0,1))>0) $hidden_content .= '<p style="margin-left:75px;">'.$pay_content.'</p>';
-		if($price[5]!=0&&count(get_user_order_records(get_the_ID(),0,1))<=0){$amount=(int)get_post_meta(get_the_ID(),'product_amount',true);$btn=$amount>0?'<a class="inner-buy-btn" data-top="false"><i class="fa fa-shopping-cart"></i>立即购买</a>':'<a class="inner-soldout" href="javascript:"><i class="fa fa-shopping-cart">&nbsp;</i>缺货不可购买</a>';$hidden_content .= '<div id="pay"><p>购买该资源后，相关内容将发送至您的邮箱！'.$btn.'</p></div>';}
-		$see_content = empty($hidden_content)?$content:$content.'<div class="label-title post"><span id="title"><i class="fa fa-paypal"></i>&nbsp;付费资源</span>'.$hidden_content.'</div>';
+        //免费或已购买，直接输出
+		if($price[5]==0||count(get_user_order_records(get_the_ID(),0,1))>0){
+            $pay_content = get_post_meta(get_the_ID(),'product_pay_content',true);
+            $hidden_content .= '<div class="pay-content">'.$pay_content.'</div>';
+        }
+        //付费且未购买，输出提示信息
+		if($price[5]!=0&&count(get_user_order_records(get_the_ID(),0,1))<=0){
+            $hidden_content = '';
+            $prices = um_post_source_price(get_the_ID());
+            
+            if(!is_user_logged_in()){
+                $hidden_content .= '<div class="pay"><i class="fa fa-lock"></i>游客，如果您要查看本帖付费内容请<a class="user-login" href="javascript:">登录</a></div>';
+            }else{
+                $amount=(int)get_post_meta(get_the_ID(),'product_amount',true);
+                if($amount>0){
+                    $hidden_content .= '<div class="pay"><i class="fa fa-lock"></i>本帖付费内容请<a class="inner-buy-btn" data-top="false">购买</a>( '.$prices.' )</div>';
+                }else{
+                    $hidden_content .= '<div class="pay"><i class="fa fa-lock"></i>本帖付费内容<a class="inner-soldout" href="javascript:">已售罄( '.$prices.' )</a></div>';
+                }
+            }
+        }
+		$see_content = empty($hidden_content)?$content:$content.'<div class="pay-wrapper">'.$hidden_content.'</div>';
 	}else{
 		$see_content = $content;
 	}
