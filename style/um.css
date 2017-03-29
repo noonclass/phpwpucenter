@@ -213,7 +213,7 @@ body.post-type-archive-store #main-wrap{background: #f1f1f1;}
 #user-login.only-login{border-radius:4px;}
 #user-reg{border-radius: 0 4px 4px 0;margin-left:1px}
 /* Paybox */
-.fadeIn #paybox{opacity:1;filter: alpha(opacity=100);-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-o-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}
+.fadeOut #paybox{opacity:1;filter: alpha(opacity=100);-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-o-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}
 #paybox,#paybox a{font-size:12px !important;line-height:1.5;}
 #paybox{position:fixed;z-index:9998;top:80px;left:50%;width:400px;margin-left:-200px;opacity:0;filter: alpha(opacity=0);-webkit-transform:translate3d(0,-600px,0);-moz-transform:translate3d(0,-600px,0);-o-transform:translate3d(0,-600px,0);transform:translate3d(0,-600px,0);min-height:200px;-webkit-transition:all .3s ease-out;-moz-transition:all .3s ease-out;-o-transition:all .3s ease-out;transition:all .3s ease-out;-webkit-perspective:800px;-moz-perspective:800px;-ms-perspective:800px;perspective:800px}
 #paybox .part{min-height:425px;position:absolute;width:100%;left:0;top:0;background-color:#FFF;padding:50px 50px 40px 50px;box-sizing:border-box;-webkit-transform-style:preserve-3d;-moz-transform-style:preserve-3d;-ms-transform-style:preserve-3d;transform-style:preserve-3d;-webkit-transition:all .9s ease-in-out;-moz-transition:all .9s ease-in-out;-ms-transition:all .9s ease-in-out;transition:all .9s ease-in-out;-webkit-backface-visibility:hidden;-moz-backface-visibility:hidden;-ms-backface-visibility:hidden;backface-visibility:hidden;display:none}

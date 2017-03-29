@@ -1284,7 +1284,7 @@ function cx_foot(){
 	$output .= '<p class="footer_menus">'.strip_tags(wp_nav_menu( $menus ), '<a>' ).'</p><p>版权所有 Copyright © ';	
 	$output .= date('Y');		
 	$output .= ' '.$site_title.'<span> .AllRights Reserved';	
-	if(isset($_foot_ba_url) && $_foot_ba_url =='off'){
+	if(isset($_foot_ba_url) && $_foot_ba_url =='on'){
      $output .= '<a href="http://www.miitbeian.gov.cn/" rel="nofollow" target="_blank">'.$_foot_ba.'</a>';	
 	} else {
 	$output .= ' '.$_foot_ba;

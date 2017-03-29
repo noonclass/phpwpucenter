@@ -17,9 +17,9 @@ function um_check_paybox(){
     var paybox_set = umGetCookie('um_check_paybox');
     if(paybox_set.length>0) return false;
 	if($("div.overlay").length<=0) $("body").append('<div class="overlay"></div>');
-	$("div.overlay").show(),$("body").addClass("fadeIn");
+	$("div.overlay").show(),$("body").addClass("fadeOut");
     $('#paybox').addClass("um_paybox");
-	$("div.overlay, form a.close").bind("click",function(){return $("body").removeClass("fadeIn"),$('#paybox').removeAttr("class"),$("div.overlay").remove();});
+	$("div.overlay, form a.close").bind("click",function(){return $("body").removeClass("fadeOut"),$('#paybox').removeAttr("class"),$("div.overlay").remove();});
     $("#pb_submit").bind("click",function(){
         pb_way = $("#paybox input[name='pb_way']:checked").val();
         pb_account = $('#paybox input#pb_account').val();
@@ -27,7 +27,7 @@ function um_check_paybox(){
         umSetCookie('um_check_paybox',1,5,moemob.home_url);
         $('#joinvip-submit').trigger("click");//开通会员
         $('#creditrechargesubmit').trigger("click");//积分充值
-        return $("body").removeClass("fadeIn"),$('#paybox').removeAttr("class"),$("div.overlay").remove();
+        return $("body").removeClass("fadeOut"),$('#paybox').removeAttr("class"),$("div.overlay").remove();
     });
     
 	return true;
