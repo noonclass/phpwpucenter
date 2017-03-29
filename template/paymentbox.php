@@ -15,7 +15,7 @@ function um_paymentbox(){
 ?>
 <div id="paybox" class="um_paybox">
     <div class="part payPart">
-    <form action="" method="null">
+    <form action="" method="post">
         <h3>扫码支付<p class="status"></p></h3>
         <p>
             <input type="radio" name="pb_way" id="weixin" value="weixin" checked="checked" >
