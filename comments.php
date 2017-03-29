@@ -26,7 +26,7 @@ if ( post_password_required() ) {
 	<?php endif; ?>
 	<?php if ( comments_open() ) : ?>
 	<div class="single-post-comment-reply" id="respond" >
-			<form action="<?php echo get_option('siteurl'); ?>/wp-comments-post.php" class="comment_form" method="post" id="commentform" >
+			<form id="commentform" class="comment_form" action="" method="post" >
 				<div class="single-post-comment__form cf">  
 					<textarea class="textarea form-control" data-widearea="enable" id="comment" name="comment" placeholder="你怎么看？"></textarea>
 					<?php comment_id_fields(); do_action('comment_form', $post->ID); ?>		
@@ -117,7 +117,7 @@ if ( post_password_required() ) {
 		<p class="no-comments">评论已关闭！</p>
 	<?php endif; ?>
 <!-- 显示正在加载新评论 -->
-	<ul>
+	<ul class="comment-list">
 	<hr>
 		<?php wp_list_comments( 'type=comment&callback=mytheme_comment' ); ?>
 	</ul><!-- .comment-list -->

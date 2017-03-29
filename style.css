@@ -231,8 +231,8 @@ hr{margin-top:20px;border:0;border-top:1px solid #eee}
 .main_inner{max-width:1180px;width:100%;margin:0 auto}
 .main_left{width:calc(100% - 300px);float:left;background:#fff;min-height:400px;height:auto;-webkit-box-shadow:0 3px 2px rgba(0,0,0,.15);-moz-box-shadow:0 3px 2px rgba(0,0,0,.15);box-shadow:0 3px 2px rgba(0,0,0,.15)}
 .butterBar{margin-left:36%;max-width:640px;position:fixed;text-align:center;top:0;width:58%;z-index:800}
-.butterBar--center{left:50%;margin-left:-320px}
-.butterBar-message{background:rgba(255,255,255,.97);border-bottom-left-radius:4px;border-bottom-right-radius:4px;box-shadow:0 1px 1px rgba(0,0,0,.25),0 0 1px rgba(0,0,0,.35);display:inline-block;font-size:14px;margin-bottom:0;padding:12px 25px}
+.butterBar-center{left:50%;margin-left:-320px}
+.butterBar-message{background:rgba(255,102,102,.67);border-bottom-left-radius:4px;border-bottom-right-radius:4px;box-shadow:0 1px 1px rgba(0,0,0,.25),0 0 1px rgba(0,0,0,.35);display:inline-block;font-size:14px;margin-bottom:0;padding:12px 25px}
 #cancel_comment_reply{float:right;line-height:30px;padding-right:10px}
 .main_right{float:right;width:280px}
 .item_title{min-height:100px;background:#fafafa;border-bottom:1px solid #f3f3f3;height:auto;padding:20px}
@@ -326,7 +326,7 @@ hr{margin-top:20px;border:0;border-top:1px solid #eee}
 .single-post-comment .bottom button{float:right}
 .ladda-button.comment-submit-btn{width:100px;height:30px;background:#f66;color:#fff;text-align:center;line-height:30px;cursor:pointer;border:0;padding:0;font-size:13px}
 .single-post-comment .bottom button:hover{background:#f66}
-.single-post-comment .children{padding-left:40px}
+.single-post-comment .children{padding-left:40px;list-style-type: none;}
 .single-post-comment .comment_details{padding-bottom:20px;padding-top:20px;border-bottom:1px solid #f4f4f4}
 .single-post-comment .comment_details:after{content:'';display:block;clear:both;height:0}
 .single-post-comment .comment_details .avatar{float:left;margin-right:10px}

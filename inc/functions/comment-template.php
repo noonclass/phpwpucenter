@@ -7,26 +7,6 @@ Author URI: http://moemob.com
 Description: 时尚自适应图片主题，集成了功能强大的前台用户中心
 Version: 1.0
 ****************************************************************/
-function get_author_class($comment_author_email,$user_id){
-	global $wpdb;
-	$author_count = count($wpdb->get_results(
-	"SELECT comment_ID as author_count FROM $wpdb->comments WHERE comment_author_email = '$comment_author_email' "));
-    $adminEmail = get_option('admin_email');if($comment_author_email ==$adminEmail) return;
-	if($author_count>=10 && $author_count<20)
-		echo '<a class="vip1" title="评论达人 LV.1"></a>';
-	else if($author_count>=20 && $author_count<40)
-		echo '<a class="vip2" title="评论达人 LV.2"></a>';
-	else if($author_count>=40 && $author_count<80)
-		echo '<a class="vip3" title="评论达人 LV.3"></a>';
-	else if($author_count>=80 && $author_count<160)
-		echo '<a class="vip4" title="评论达人 LV.4"></a>';
-	else if($author_count>=160 && $author_count<320)
-		echo '<a class="vip5" title="评论达人 LV.5"></a>';
-	else if($author_count>=320 && $author_count<640)
-		echo '<a class="vip6" title="评论达人 LV.6"></a>';
-	else if($author_count>=640)
-		echo '<a class="vip7" title="评论达人 LV.7"></a>';
-}
 function mytheme_comment($comment, $args, $depth) {
 	$GLOBALS['comment'] = $comment;
 	extract($args, EXTR_SKIP);
@@ -45,6 +25,8 @@ function mytheme_comment($comment, $args, $depth) {
 		$cpp=get_option('comments_per_page');
 		$commentcount = $cpp * $page;
 	}
+    
+    // 评论输出HTML，comment-ajax也使用此结构
 ?>
 	
 	<<?php echo $tag ?> <?php comment_class(); ?> id="comment-<?php comment_ID() ?>">

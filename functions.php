@@ -7,6 +7,12 @@ Author URI: http://moemob.com
 Description: 时尚自适应图片主题，集成了功能强大的前台用户中心
 Version: 1.0
 ****************************************************************/
+$user_agent = $_SERVER['HTTP_USER_AGENT'];
+$keys = 'FeedDemon|BOT|CrawlDaddy|Java|Feedly|UniversalFeedParser|ApacheBench|Swiftbot|ZmEu|oBot|jaunty|YandexBot|AhrefsBot|MJ12bot|WinHttp|EasouSpider|HttpClient';
+if (empty($user_agent) || preg_match('/'.$keys.'/i', $user_agent)) {
+    header('Content-Type: text/plain;charset=UTF-8');
+    wp_die('Block Spam...');
+}
 
 date_default_timezone_set("PRC");
 
@@ -123,6 +129,7 @@ require CX_FUNCT .'options_feild.php'; //设置页面
 require CX_FUNCT .'termmeta_feild.php'; //分类字段
 require CX_FUNCT .'postmeta_feild.php'; //文字字段
 require CX_FUNCT .'options_config.php'; //配置文件
+require CX_FUNCT .'comment-ajax.php';//评论提交
 require CX_FUNCT .'comment-template.php';//评论模板
 require CX_FUNCT .'covers_config.php';//封面人物 - Cover
 
@@ -180,6 +187,8 @@ function script_parameter(){
 	$object['home_url']  = home_url();
 	$object['ajax_url']  = admin_url('admin-ajax.php');
     $object['admin_url'] = admin_url();
+    $object['comment_form']  = 'top'; //默认为top，如果你的表单在底部则设置为bottom。
+    $object['comment_order'] = get_option('comment_order');
     
 	if(is_single()){
         global $post;
