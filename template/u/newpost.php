@@ -140,7 +140,8 @@ if( isset($_GET['action']) && in_array($_GET['action'], array('new', 'edit')) &&
         <div class="dashboard-main">
             <div class="dashboard-header">
 				<p class="sub-title">发表文章</p>
-				<p class="tip">提示：文章作品需提交审核才能正式发布，请耐心等待</p>
+				<p class="tip">提示：文章作品需提交审核才能正式发布，请耐心等待<br/>
+                提示：文章作品含付费资源请在正文最后填写付费信息，格式为售价|链接|密码等</p>
 				<!-- Page global message -->
 				<?php if($message) echo '<div class="alert alert-success">'.$message.'</div>'; ?>
 			</div>

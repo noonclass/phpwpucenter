@@ -765,7 +765,7 @@ body.author .dashboard .bd{
   margin-bottom: 20px;
 }
 .dashboard .primary .area .page-wrapper .dashboard-main .dashboard-wrapper {
-  margin: 20px auto;
+  margin: 0 auto;
 }
 .dashboard .primary .area .page-wrapper ul li {
   margin-bottom: 10px;
