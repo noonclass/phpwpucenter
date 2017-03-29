@@ -67,6 +67,7 @@ require_once('func/meta-box.php');
 require_once('func/open-social.php');
 require_once('func/extension.php');
 require_once('template/loginbox.php');
+require_once('template/paymentbox.php');
 require_once('template/order.php');
 require_once('widgets/ucenter.php');
 require_once('widgets/credits-rank.php');
@@ -1386,7 +1387,7 @@ function get_plain_header(){
         $output .= '<div class="header header-logged-out width-full pt-5 pb-4" role="banner">';
         $output .= '<div class="container clearfix width-full">';
         $output .= '<a class="header-logo" href="'.home_cx.'">';
-		$output .= '<img src="'.CX_THEMES_URL.'/images/logo_cc.png" alt="'.get_bloginfo('name').'" />';
+		$output .= '<img src="'.CX_THEMES_URL.'/images/logo_plain.png" alt="'.get_bloginfo('name').'" />';
         $output .= '</a>';
         $output .= '</div>';
         $output .= '</div>';

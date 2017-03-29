@@ -141,16 +141,16 @@ if ( $current_user->ID==$curauth->ID ) { ?>
 				<div class="panel panel-success">
 					<div class="panel-heading"><?php echo __('积分充值（仅自己可见）','um');?></div>
 					<div class="panel-body">
-						<form id="creditrechargeform" role="form"  method="post" action="<?php echo UM_URI.'/alipay/alipayapi.php'; ?>" onsubmit="return false;">
+						<form id="creditrechargeform" role="form"  method="post" action="<?php echo home_url('/payment'); ?>" onsubmit="return false;">
 							<input type="hidden" name="creditrechargeNonce" value="<?php echo  wp_create_nonce( 'creditrecharge-nonce' );?>" >
 							<input type = "hidden" id="order_id" name="order_id" readonly="" value="0">
 							<input type = "hidden" id="product_id" name="product_id" readonly="" value="-5">
 							<p>
-								<label><?php echo sprintf(__('当前积分兑换比率为：1元 = %1$s 积分','um'),um_get_setting('um_cash_credit_ratio',50));?></label>
+								<label><?php echo sprintf(__('当前积分兑换比率为：1元 = %1$s 积分','um'),um_get_setting('um_cash_credit_ratio',100));?></label>
 							</p>
 							<div class="form-inline">
 								<div class="form-group">
-									<div class="input-group">
+                                    <div class="input-group">
 										<div class="input-group-addon"><?php _e('积分*100','um');?></div>
 										<input class="form-control" type="text" name="creditrechargeNum" value="10" aria-required='true' required>
 									</div>

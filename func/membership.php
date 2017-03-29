@@ -138,11 +138,13 @@ function create_the_vip_order(){
 	if(!is_user_logged_in()){$msg='请先登录';}else{
 		$user_info = wp_get_current_user();$uid = $user_info->ID;$user_name=$user_info->display_name;$user_email = $user_info->user_email;
 		$product_id = $_POST['product_id'];
+        $payment_way = $_POST['payment_way'];
+        $payment_account = $_POST['payment_account'];
 		if($product_id==-4){$order_price=um_get_setting('life_mb_price',120);$order_name='终身会员';}elseif($product_id==-3){$order_price=um_get_setting('annual_mb_price',45);$order_name='年费会员';}elseif($product_id==-2){$order_price=um_get_setting('quarterly_mb_price',12);$order_name='季费会员';}else{$order_price=um_get_setting('monthly_mb_price',5);$order_name='月费会员';}
 		$ratio = um_get_setting('aff_ratio',10);
 		$rewards = $order_price*$ratio/100;
 		$rewards = (int)$rewards;
-		$insert = insert_order($product_id,$order_name,$order_price,1,$order_price,1,'',$uid,$_POST['aff_user_id'],$rewards,$user_name,$user_email,'','','','','');
+		$insert = insert_order($product_id,$order_name,$payment_way,$payment_account,$order_price,1,$order_price,1,'',$uid,$_POST['aff_user_id'],$rewards,$user_name,$user_email,'','','','','');
 		if($insert){
 			$success = 1;
 			$order_id = $insert;

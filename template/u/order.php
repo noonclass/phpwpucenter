@@ -83,7 +83,7 @@ $offset = ($paged-1)*$number;
 					<ul class="site-order-list">
 					<div class="shop" style="margin-top: 50px;">
 						<div id="history" class="wrapbox">
-							<form id="continue-pay" name="continue-pay" action="<?php echo UM_URI.'/alipay/alipayapi.php'; ?>" method="post" style="height:0;">
+							<form id="continue-pay" name="continue-pay" action="<?php echo home_url('/payment'); ?>" method="post" style="height:0;">
 								<input type = "hidden" id="product_id" name="product_id" readonly="" value="">
 								<input type = "hidden" id="order_id" name="order_id" readonly="" value="0">
 								<input type = "hidden" id="order_name" name="order_name" readonly="" value="0">

@@ -17,7 +17,7 @@ function um_order_popup(){
         $discount_arr = product_smallest_price(get_the_ID());
 ?>
             <div id="order" class="popupbox">
-                <form id="alipayment" name="alipayment" action="<?php echo UM_URI.'/alipay/alipayapi.php'; ?>" method="post">
+                <form id="alipayment" name="alipayment" action="<?php echo home_url('/payment'); ?>" method="post">
                     <div id="pay">
                         <div class="part-order">
                             <ul>
@@ -28,9 +28,17 @@ function um_order_popup(){
                                 <li><label for="order_name"><small>*</small><?php _e('商品名称：','um'); ?></label><input id="order_name" name="order_name" readonly="" value="<?php the_title();?>"></li>
                                 <li><label for="order_price"><small>*</small><?php _e('商品单价：','um'); ?></label><input id="order_price" readonly="" value="<?php echo $discount_arr[5]; ?>"></li>
                                 <li><label for="order_quantity"><small>*</small><?php _e('商品数量：','um'); ?></label><input id="order_quantity" name="order_quantity" value="1" maxlength="8" title="<?php _e('请输入购买量','um'); ?>" onkeydown="if(event.keyCode==13)return false;"></li>
+                                <li><label for="order_total"><small>*</small><?php _e('商品总额：','um'); ?></label><input id="order_total" readonly="" value="1.00"></li>
+                                <li><label for="payment_way" id="label-payment-way"><small>*</small><?php _e('支付方式：','um'); ?></label>
+                                  <input type="radio" name="payment_way" id="weixin" value="weixin" checked="checked" >
+                                  <label for="weixin"></label>
+                                  <input type="radio" name="payment_way" id="alipay" value="alipay">
+                                  <label for="alipay"></label>
+                                </li>
+                                <li><label for="payment_account"><small>*</small><?php _e('支付账号：','um'); ?></label><input id="payment_account" name="payment_account" value="" placeholder="微信号/支付宝账号"></li>
                             </ul>
                             <ul>
-                                <h3><?php _e('收货信息','um'); ?><span><?php _e('商店','um'); ?><?php _e('（虚拟商品除邮箱外可不填）','um'); ?></span></h3>
+                                <h3><?php _e('收货信息','um'); ?><span><?php _e('商店','um'); ?><?php _e('（虚拟商品除姓名和邮箱外可不填）','um'); ?></span></h3>
                                 <?php $autofill = get_user_autofill_info();?>
                                 <li><label for="receive_name"><?php _e('收货姓名：','um'); ?></label><input id="receive_name" name="order_receive_name" value="<?php echo $autofill['user_name']; ?>" onkeydown="if(event.keyCode==13)return false;"></li>
                                 <li><label for="receive_address"><?php _e('收货地址：','um'); ?></label><input id="receive_address" name="order_receive_address" value="<?php echo isset($autofill['user_address'])?$autofill['user_address']:''; ?>" onkeydown="if(event.keyCode==13)return false;"></li>

@@ -13,7 +13,6 @@ Package: Ucenter & Market
 <?php
 function um_loginbox(){
 ?>
-<div class="overlay-login"></div>
 <div id="sign" class="um_sign">
     <div class="part loginPart">
     <form id="login" action="<?php echo get_option('home'); ?>/wp-login.php" method="post" novalidate="novalidate">

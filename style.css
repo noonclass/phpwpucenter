@@ -57,7 +57,7 @@ to{left:120px;top:100px}
 .header_menu>ul>li.toke>a:after{font-family:FontAwesome;content:"\f0d7";display:inline-block;color:#f66;float:none;position:relative;top:0;left:4px}
 .home-top{width:1180px;margin:110px auto 0;overflow:hidden}
 .slider-wrap{position:relative;overflow:hidden;float:left}
-.slider-wrap .nivoSlider{width:880px;height:350px;margin:0 auto;background:url(img/loading.gif) no-repeat 50% 50%}
+.slider-wrap .nivoSlider{width:880px;height:350px;margin:0 auto;background:url(images/loading.gif) no-repeat 50% 50%}
 .slider-wrap .nivoSlider img{position:absolute;top:0;left:0;display:none}
 .slider-wrap:hover .nivo-controlNav{opacity:1}
 .slider-right{margin-left:20px;width:280px;float:right}

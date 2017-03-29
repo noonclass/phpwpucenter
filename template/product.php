@@ -160,7 +160,7 @@ Package: Ucenter & Market
 				</div>	
 			</article>
 			<div id="order" class="popupbox">
-				<form id="alipayment" name="alipayment" action="<?php echo UM_URI.'/alipay/alipayapi.php'; ?>" method="post">
+				<form id="alipayment" name="alipayment" action="<?php echo home_url('/payment'); ?>" method="post">
 					<div id="pay">
 						<div class="part-order">
 							<ul>

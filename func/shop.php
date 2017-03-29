@@ -10,6 +10,8 @@ function um_store_install(){
             `trade_no` varchar(30) NOT NULL,
             `product_id` bigint(20) NOT NULL default '0',
             `product_name` varchar(250),
+            `payment_way` varchar(10),
+            `payment_account` varchar(100),
             `order_time` datetime NOT NULL default '0000-00-00 00:00:00',
             `order_success_time` datetime NOT NULL default '0000-00-00 00:00:00',
             `order_price` double(10,2) NOT NULL,
@@ -441,7 +443,7 @@ function update_coupon_code_total_price($code='',$total_price=0,$ajax=1){
 add_action( 'wp_ajax_use_coupon_code', 'update_coupon_code_total_price' );
 
 //插入订单记录
-function insert_order($product_id,$product_name,$order_price='',$order_quantity,$order_total_price,$order_status=0,$order_note='',$user_id,$aff_user_id='',$rewards,$user_name,$user_email='',$user_address='',$user_zip='',$user_phone='',$user_cellphone='',$user_message=''){
+function insert_order($product_id,$product_name,$payment_way,$payment_account,$order_price='',$order_quantity,$order_total_price,$order_status=0,$order_note='',$user_id,$aff_user_id='',$rewards,$user_name,$user_email='',$user_address='',$user_zip='',$user_phone='',$user_cellphone='',$user_message=''){
 	date_default_timezone_set ('Asia/Shanghai');
 	global $wpdb;
 	$prefix = $wpdb->prefix;
@@ -450,7 +452,7 @@ function insert_order($product_id,$product_name,$order_price='',$order_quantity,
 	$order_time = date("Y-m-d H:i:s");
 	if(empty($order_price)){$order_price_arr = product_smallest_price($product_id);$order_price=$order_price_arr[5];}
 	if($product_id>0){$order_currency = (get_post_meta($product_id,'pay_currency',true)!=1)?'credit':'cash';}else{$order_currency='cash';}
-	if($wpdb->query( "INSERT INTO $table (order_id,product_id,product_name,order_time,order_price,order_currency,order_quantity,order_total_price,order_status,order_note,user_id,aff_user_id,aff_rewards,user_name,user_email,user_address,user_zip,user_phone,user_cellphone,user_message) VALUES ('$order_id','$product_id','$product_name','$order_time','$order_price','$order_currency','$order_quantity','$order_total_price','$order_status','$order_note','$user_id','$aff_user_id','$rewards','$user_name','$user_email','$user_address','$user_zip','$user_phone','$user_cellphone','$user_message')" )) return $order_id;
+	if($wpdb->query( "INSERT INTO $table (order_id,product_id,product_name,payment_way,payment_account,order_time,order_price,order_currency,order_quantity,order_total_price,order_status,order_note,user_id,aff_user_id,aff_rewards,user_name,user_email,user_address,user_zip,user_phone,user_cellphone,user_message) VALUES ('$order_id','$product_id','$product_name','$payment_way','$payment_account','$order_time','$order_price','$order_currency','$order_quantity','$order_total_price','$order_status','$order_note','$user_id','$aff_user_id','$rewards','$user_name','$user_email','$user_address','$user_zip','$user_phone','$user_cellphone','$user_message')" )) return $order_id;
 	return 0;
 }
 
@@ -492,7 +494,7 @@ function create_the_order(){
 				$ratio = um_get_setting('aff_ratio',10);
 				$rewards = $cost*$ratio/100;
 				$rewards = (int)$rewards;
-				$insert = insert_order($_POST['product_id'],$_POST['order_name'],$price[5],$quantity,$cost,4,$order_note,$uid,$aff_uid,$rewards,$_POST['receive_name'],$_POST['receive_email'],$_POST['receive_address'],$_POST['receive_zip'],$_POST['receive_phone'],$_POST['receive_mobile'],$_POST['order_msg']);
+				$insert = insert_order($_POST['product_id'],$_POST['order_name'],$_POST['payment_way'],$_POST['payment_account'],$price[5],$quantity,$cost,4,$order_note,$uid,$aff_uid,$rewards,$_POST['receive_name'],$_POST['receive_email'],$_POST['receive_address'],$_POST['receive_zip'],$_POST['receive_phone'],$_POST['receive_mobile'],$_POST['order_msg']);
 				if($insert):
 				//扣除积分//发送站内信
 				update_um_credit( $uid , $cost , 'cut' , 'um_credit' , '下载资源消费'.$cost.'积分' );
@@ -540,7 +542,7 @@ function create_the_order(){
 			$rewards = $cost*$ratio/100;
 			$rewards = sprintf('%0.2f',$rewards);
 			//现金支付方式，首先插入数据库订单记录
-			$insert = insert_order($_POST['product_id'],$_POST['order_name'],$price[5],$quantity,$cost_coupond,1,$order_note,$uid,$aff_uid,$rewards,$_POST['receive_name'],$_POST['receive_email'],$_POST['receive_address'],$_POST['receive_zip'],$_POST['receive_phone'],$_POST['receive_mobile'],$_POST['order_msg']);
+			$insert = insert_order($_POST['product_id'],$_POST['order_name'],$_POST['payment_way'],$_POST['payment_account'],$price[5],$quantity,$cost_coupond,1,$order_note,$uid,$aff_uid,$rewards,$_POST['receive_name'],$_POST['receive_email'],$_POST['receive_address'],$_POST['receive_zip'],$_POST['receive_phone'],$_POST['receive_mobile'],$_POST['order_msg']);
 			if($insert){
 				$redirect = 1;
 				$success = 1;
@@ -791,6 +793,8 @@ function create_credit_recharge_order(){
 	$credits = ((int)$_POST['creditrechargeNum'])*100;
 	$order_name = '充值'.$credits.'积分';
 	$product_id = $_POST['product_id'];
+    $payment_way = $_POST['payment_way'];
+    $payment_account = $_POST['payment_account'];
 	if(!is_user_logged_in()){$msg='请先登录';}else{
 		$user_info = wp_get_current_user();$uid = $user_info->ID;$user_name=$user_info->display_name;$user_email = $user_info->user_email;
 		if($product_id!=-5){$msg='系统发生错误，请刷新再试';}else{
@@ -799,7 +803,7 @@ function create_credit_recharge_order(){
 			$ratio = um_get_setting('aff_ratio',10);
 			$rewards = $order_price*$ratio/100;
 			$rewards = (int)$rewards;
-			$insert = insert_order($product_id,$order_name,$order_price,1,$order_price,1,'',$uid,$_POST['aff_user_id'],$rewards,$user_name,$user_email,'','','','','');
+			$insert = insert_order($product_id,$order_name,$payment_way,$payment_account,$order_price,1,$order_price,1,'',$uid,$_POST['aff_user_id'],$rewards,$user_name,$user_email,'','','','','');
 			if($insert){
 				$success = 1;
 				$order_id = $insert;

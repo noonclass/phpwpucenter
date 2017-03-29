@@ -150,7 +150,7 @@ $offset = ($paged-1)*$number;
 					</div>
 					<div class="panel">
 						<div class="panel-body">
-							<form id="joinvip" role="form" method="post" action="<?php echo UM_URI.'/alipay/alipayapi.php'; ?>" onsubmit="return false;">
+							<form id="joinvip" role="form" method="post" action="<?php echo home_url('/payment'); ?>" onsubmit="return false;">
 								<p>
 									<input type="hidden" name="vipNonce" value="<?php echo wp_create_nonce( 'vip-nonce' );?>" >
 									<input type = "hidden" id="order_id" name="order_id" readonly="" value="0">
