@@ -42,7 +42,7 @@ $manage_tabs = array(
 );
 if($oneself){$manage_tabs['membership']='会员信息';}
 if($oneself)$manage_tabs['orders']='站内订单';
-if($admin)$manage_tabs['siteorders']='订单管理';
+if($admin)$manage_tabs['manage']='订单管理';
 $manage_tabs['affiliate']='我的推广';
 if($admin)$manage_tabs['coupon']='优惠码';
 
@@ -77,7 +77,7 @@ if( $oneself ){
 				'description' => $_POST['description'],
 				'um_gender' => $_POST['um_gender']
 			 ) );
-			if (($_FILES['file']['error'])==0&&!empty($_FILES['file'])) {
+			if (isset($_FILES['file'])&&($_FILES['file']['error'])==0&&!empty($_FILES['file'])) {
 				define( 'AVATARS_PATH', ABSPATH.'/wp-content/uploads/avatars/' );
 				$filetype=array("jpg","gif","bmp","jpeg","png");
     			$ext = pathinfo($_FILES['file']['name']);

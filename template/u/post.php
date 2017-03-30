@@ -42,7 +42,7 @@ $manage_tabs = array(
 );
 if($oneself){$manage_tabs['membership']='会员信息';}
 if($oneself)$manage_tabs['orders']='站内订单';
-if($admin)$manage_tabs['siteorders']='订单管理';
+if($admin)$manage_tabs['manage']='订单管理';
 $manage_tabs['affiliate']='我的推广';
 if($admin)$manage_tabs['coupon']='优惠码';
 
@@ -69,7 +69,7 @@ $offset = ($paged-1)*$number;
     <div class="page-wrapper">
         <div class="dashboard-main">
             <div class="dashboard-header">
-				<p class="sub-title">您已发布<span><?php echo $posts_count; ?></span>篇文章作品<a <?php echo is_user_logged_in() ? 'href="'.add_query_arg(array('tab'=>'post','action'=>'new'), get_author_posts_url($current_user->ID)).'" ' : 'href="javascript:" class="user-login"' ; ?>><span class="new-post-btn">写文章</span></a></p>
+				<p class="sub-title">您已发布<span><?php echo $posts_count; ?></span>篇文章作品<a <?php echo is_user_logged_in() ? 'href="'.um_get_user_url('post/new', $current_user->ID).'" ' : 'href="javascript:" class="user-login"' ; ?>><span class="new-post-btn">写文章</span></a></p>
 				<!--p class="tip">提示：删除后不可恢复，请谨慎操作。</p-->
 				<!-- Page global message -->
 				<?php if($message) echo '<div class="alert alert-success">'.$message.'</div>'; ?>

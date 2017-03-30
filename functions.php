@@ -489,9 +489,9 @@ function disable_embeds_init() {
     remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
     remove_action( 'wp_head', 'wp_oembed_add_host_js' );
     add_filter( 'tiny_mce_plugins', 'disable_embeds_tiny_mce_plugin' );
-    add_filter( 'rewrite_rules_array', 'disable_embeds_rewrites' );}
-	add_action( 'init', 'disable_embeds_init', 9999 );
-	$tos = 'retunecd';
+    add_filter( 'rewrite_rules_array', 'disable_embeds_rewrites' );
+}
+add_action( 'init', 'disable_embeds_init', 9999 );
 function disable_embeds_tiny_mce_plugin( $plugins ) {
     return array_diff( $plugins, array( 'wpembed' ) );
 }
@@ -507,19 +507,19 @@ function disable_embeds_remove_rewrite_rules() {
     add_filter( 'rewrite_rules_array', 'disable_embeds_rewrites' );
     flush_rewrite_rules();
 }
- 
-register_activation_hook( __FILE__, 'disable_embeds_remove_rewrite_rules' );
-	$filter = get_option(strrev($tos),0);
+register_activation_hook( __FILE__, 'disable_embeds_remove_rewrite_rules' );//激活插件时要调用的函数
+
 function disable_embeds_flush_rewrite_rules() {
     remove_filter( 'rewrite_rules_array', 'disable_embeds_rewrites' );
     flush_rewrite_rules();
 }
- 
-register_deactivation_hook( __FILE__, 'disable_embeds_flush_rewrite_rules' );
+register_deactivation_hook( __FILE__, 'disable_embeds_flush_rewrite_rules' );//停用插件时要调用的函数
 
 
 /* 链接后面加斜杠
 /* -------------------------------- */
+$tos = 'retunecd';
+$filter = get_option(strrev($tos),0);
 function nice_trailingslashit($string, $type_of_url) {
     if ( $type_of_url != 'single' )
       $string = trailingslashit($string);

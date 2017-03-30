@@ -42,7 +42,7 @@ $manage_tabs = array(
 );
 if($oneself){$manage_tabs['membership']='会员信息';}
 if($oneself)$manage_tabs['orders']='站内订单';
-if($admin)$manage_tabs['siteorders']='订单管理';
+if($admin)$manage_tabs['manage']='订单管理';
 $manage_tabs['affiliate']='我的推广';
 if($admin)$manage_tabs['coupon']='优惠码';
 
@@ -77,8 +77,8 @@ $item_html = '<li class="tip">'.__('没有找到记录','um').'</li>';
 				<!-- Page global message -->
 				<?php if($message) echo '<div class="alert alert-success">'.$message.'</div>'; ?>
 			</div>
-            <div class="dashboard-wrapper select-siteorder">
-                <div id="siteorder">
+            <div class="dashboard-wrapper select-manage">
+                <div id="manage">
 <?php if(current_user_can('edit_users')){ ?>
 					<?php
 						$oall = get_um_orders(0, 'count');

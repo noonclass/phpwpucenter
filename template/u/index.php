@@ -42,7 +42,7 @@ $manage_tabs = array(
 );
 if($oneself){$manage_tabs['membership']='会员信息';}
 if($oneself)$manage_tabs['orders']='站内订单';
-if($admin)$manage_tabs['siteorders']='订单管理';
+if($admin)$manage_tabs['manage']='订单管理';
 $manage_tabs['affiliate']='我的推广';
 if($admin)$manage_tabs['coupon']='优惠码';
 
@@ -135,7 +135,7 @@ $get_tab = isset($_GET['tab']) && in_array($_GET['tab'], $tab_array) ? $_GET['ta
 						<li><a href="<?php echo um_get_user_url('orders',$curauth->ID); ?>"><i class="fa fa-shopping-cart"></i>我的订单</a></li>
 						<li>
 						<?php if(is_user_logged_in()){ ?>
-						<a href="<?php echo add_query_arg(array('tab'=>'post','action'=>'new'), get_author_posts_url($current_user->ID)); ?>">
+						<a href="<?php echo um_get_user_url('post/new', $current_user->ID); ?>">
 						<?php }else{ ?>
 						<a href="javascript:" class="user-login">
 						<?php } ?>

@@ -43,7 +43,7 @@ $manage_tabs = array(
 );
 if($oneself){$manage_tabs['membership']='会员信息';}
 if($oneself)$manage_tabs['orders']='站内订单';
-if($admin)$manage_tabs['siteorders']='订单管理';
+if($admin)$manage_tabs['manage']='订单管理';
 $manage_tabs['affiliate']='我的推广';
 if($admin)$manage_tabs['coupon']='优惠码';
 
@@ -58,7 +58,7 @@ foreach( $tabs as $tab_key=>$tab_value ){
 }
 
 // Current tab
-$get_tab = isset($_GET['tab']) && in_array($_GET['tab'], $tab_array) ? $_GET['tab'] : 'index';
+$get_tab = isset($wp_query->query_vars['tab']) && in_array($wp_query->query_vars['tab'], $tab_array) ? $wp_query->query_vars['tab'] : 'index';
 
 // 提示
 $message = $pages = '';
@@ -91,7 +91,7 @@ $item_html = '<li class="tip">'.__('没有找到记录','um').'</li>';
 		<!-- End Tab-index -->
 		<!-- Tab-post -->
 		<?php if( $get_tab=='post' ) {
-			if(isset($_GET['action'])&&in_array($_GET['action'],array('new','edit')))include('u/newpost.php');
+			if(isset($wp_query->query_vars['action'])&&in_array($wp_query->query_vars['action'],array('new','edit')))include('u/post-new.php');
 			else include('u/post.php');
 		} ?>
 		<!-- End Tab-post -->
@@ -130,11 +130,11 @@ $item_html = '<li class="tip">'.__('没有找到记录','um').'</li>';
 			if( $get_tab=='orders' ) {include('u/order.php');}
 		?>
 		<!-- End Tab-orders -->
-		<!-- Tab-siteorders -->
+		<!-- Tab-order-manage -->
 		<?php
-			if( $get_tab=='siteorders' ) {include('u/siteorder.php');}
+			if( $get_tab=='manage' ) {include('u/order-manage.php');}
 		?>
-		<!-- End Tab-siteorders -->
+		<!-- End Tab-order-manage -->
 		<!-- Tab-coupon -->
 		<?php
 			if( $get_tab=='coupon' ) {include('u/coupon.php');}

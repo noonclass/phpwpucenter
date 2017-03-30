@@ -42,7 +42,7 @@ $manage_tabs = array(
 );
 if($oneself){$manage_tabs['membership']='会员信息';}
 if($oneself)$manage_tabs['orders']='站内订单';
-if($admin)$manage_tabs['siteorders']='订单管理';
+if($admin)$manage_tabs['manage']='订单管理';
 $manage_tabs['affiliate']='我的推广';
 if($admin)$manage_tabs['coupon']='优惠码';
 
@@ -57,13 +57,13 @@ foreach( $tabs as $tab_key=>$tab_value ){
 }
 
 // Current tab
-$get_tab = isset($_GET['tab']) && in_array($_GET['tab'], $tab_array) ? $_GET['tab'] : 'index';
+$get_tab = isset($wp_query->query_vars['action']) && in_array($wp_query->query_vars['action'], $tab_array) ? $wp_query->query_vars['action'] : 'index';
 
 //~ 投稿start
 
-if( isset($_GET['action']) && in_array($_GET['action'], array('new', 'edit')) && $oneself ){
-	
-	if( isset($_GET['id']) && is_numeric($_GET['id']) && get_post($_GET['id']) && intval(get_post($_GET['id'])->post_author) === get_current_user_id() ){
+if( isset($wp_query->query_vars['action']) && in_array($wp_query->query_vars['action'], array('new', 'edit')) && $oneself ){
+	if( isset($_GET['id']) && is_numeric($_GET['id']) 
+        && get_post($_GET['id']) && intval(get_post($_GET['id'])->post_author) === get_current_user_id() ){
 		$action = 'edit';
 		$the_post = get_post($_GET['id']);
 		$post_title = $the_post->post_title;
@@ -145,8 +145,8 @@ if( isset($_GET['action']) && in_array($_GET['action'], array('new', 'edit')) &&
 				<!-- Page global message -->
 				<?php if($message) echo '<div class="alert alert-success">'.$message.'</div>'; ?>
 			</div>
-            <div class="dashboard-wrapper select-newpost">
-                <div id="newpost">
+            <div class="dashboard-wrapper select-post-new">
+                <div id="post-new">
 <?php
 	$can_post_cat = get_cat_ids()?get_cat_ids():0;
 	$cat_count = $can_post_cat!=0?count($can_post_cat):0;

@@ -42,7 +42,7 @@ $manage_tabs = array(
 );
 if($oneself){$manage_tabs['membership']='会员信息';}
 if($oneself)$manage_tabs['orders']='站内订单';
-if($admin)$manage_tabs['siteorders']='订单管理';
+if($admin)$manage_tabs['manage']='订单管理';
 $manage_tabs['affiliate']='我的推广';
 if($admin)$manage_tabs['coupon']='优惠码';
 
@@ -116,7 +116,7 @@ $item_html = '<li class="tip">'.__('没有找到记录','um').'</li>';
 				if(in_array($log->msg_type, array('repm', 'unrepm'))){
 					$msg_title_data = json_decode($log->msg_title);
 					$msg_title = get_the_author_meta('display_name', intval($msg_title_data->from));
-					$msg_title = sprintf(__('%s发来的私信','um'), $msg_title).' <a href="'.add_query_arg('tab', 'message', get_author_posts_url(intval($msg_title_data->from))).'#'.$log->msg_id.'">'.__('查看对话','um').'</a>';
+					$msg_title = sprintf(__('%s发来的私信','um'), $msg_title).' <a href="'.um_get_user_url('message', intval($msg_title_data->from)).'#'.$log->msg_id.'">'.__('查看对话','um').'</a>';
 				}
 				$item_html .= '<li'.$unread_class.'><div class="message-content">'.htmlspecialchars_decode($log->msg_content).' </div><p class="info">'.$unread_tip.'  '.$msg_title.'  '.$log->msg_date.'</p></li>';
 			}
@@ -125,7 +125,7 @@ $item_html = '<li class="tip">'.__('没有找到记录','um').'</li>';
 		
 	}else{
 		if( is_user_logged_in() ){
-			$item_html = '<li class="tip">'.sprintf(__('与 %s 对话','um'), $user_info->display_name).'</li><li><form id="pmform" role="form" method="post"><input type="hidden" name="pmNonce" value="'.wp_create_nonce( 'pm-nonce' ).'" ><p><textarea class="form-control" rows="3" name="pm" required></textarea></p><p class="clearfix"><a class="btn btn-link pull-left" href="'.add_query_arg('tab', 'message', get_author_posts_url($current_user->ID)).'">'.__('查看我的消息','um').'</a><button type="submit" class="btn btn-primary pull-right">'.__('确定发送','um').'</button></p></form></li>';
+			$item_html = '<li class="tip">'.sprintf(__('与 %s 对话','um'), $user_info->display_name).'</li><li><form id="pmform" role="form" method="post"><input type="hidden" name="pmNonce" value="'.wp_create_nonce( 'pm-nonce' ).'" ><p><textarea class="form-control" rows="3" name="pm" required></textarea></p><p class="clearfix"><a class="btn btn-link pull-left" href="'.um_get_user_url('message', $current_user->ID).'">'.__('查看我的消息','um').'</a><button type="submit" class="btn btn-primary pull-right">'.__('确定发送','um').'</button></p></form></li>';
 			$all = get_um_pm( $curauth->ID, $current_user->ID, true );
 			$pages = ceil($all/$number);
 			$pmLog = get_um_pm( $curauth->ID, $current_user->ID, false, false, $number, $offset );

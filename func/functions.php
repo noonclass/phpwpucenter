@@ -200,12 +200,12 @@ function um_timthumb($src,$width=375,$height=250,$q=100){
 }
 
 /* Ucenter tab */
-function um_get_user_url( $type='', $user_id=0 ){
+function um_get_user_url( $query_args='', $user_id=0 ){
 	$user_id = intval($user_id);
 	if( $user_id==0 ){
 		$user_id = get_current_user_id();
 	}
-	$url = add_query_arg( 'tab', $type, get_author_posts_url($user_id) );
+	$url = get_author_posts_url($user_id).'/'.$query_args;
 	return $url;
 }
 
@@ -234,7 +234,7 @@ add_action( 'init', 'um_redirect_wp_admin' );
 /* None admin users edit post fronted */
 function um_edit_post_link($url, $post_id){
 	if( !current_user_can('edit_users') ){
-		$url = add_query_arg(array('action'=>'edit', 'id'=>$post_id), um_get_user_url('post'));
+		$url = add_query_arg('id', $post_id, um_get_user_url('post/edit'));
 	}
 	return $url;
 }
@@ -953,7 +953,7 @@ function um_user_manage_widget(){
 		$shorcut_links[] = array(
 			'icon' => '<i class="fa fa-tasks"></i>',
 			'title' => __('订单管理','um'),
-			'url' => um_get_user_url('siteorders')
+			'url' => um_get_user_url('manage')
 		);
 	}
 	if( current_user_can( 'manage_options' ) ) {
@@ -1119,7 +1119,7 @@ function um_author_page_title(){
 			case 'orders':
 				$title = '个人订单';
 				break;
-			case 'siteorders':
+			case 'manage':
 				$title = '订单管理';
 				break;
 			case 'membership':
@@ -1415,6 +1415,8 @@ function um_allow_contributor_uploads() {
 }
 add_action('admin_init', 'um_allow_contributor_uploads');
 
+/* 未使用函数
+/* -------------------------------- */
 // Query products
 function um_query_products($showposts=4,$author=0,$orderby='date'){
 	$args = array('post_type'=>'store','orderby'=>$orderby,'showposts'=>$showposts);
@@ -1456,5 +1458,38 @@ function um_set_role($uid,$role='contributor'){
 	if(!$uid)return;
 	$user = new WP_User($uid);
 	$user->set_role($role);
+}
+
+/* 新增函数
+/* -------------------------------- */
+//更新author前缀
+add_action('init', 'change_author_base');
+function change_author_base() {
+    global $wp_rewrite;
+    $author_slug = 'u'; //change slug name
+    $wp_rewrite->author_base = $author_slug;
+}
+
+add_filter( 'query_vars','um_insert_query_vars' );
+function um_insert_query_vars( $vars )
+{
+    array_push($vars, 'tab');
+    array_push($vars, 'action');
+    return $vars;
+}
+
+add_filter('rewrite_rules_array', 'um_rewrites');
+function um_rewrites($rules){
+    $new_rules = array(
+        'u/([^/]+)/(post)/(new|edit|update)/?$' => 'index.php?author_name=$matches[1]&tab=$matches[2]&action=$matches[3]',
+        'u/([^/]+)/(index|post|collect|comment|message|credit|orders|manage|membership|affiliate|coupon|profile)/?$' => 'index.php?author_name=$matches[1]&tab=$matches[2]',
+        'u/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$' => 'index.php?author_name=$matches[1]&feed=$matches[2]',
+        'u/([^/]+)/(feed|rdf|rss|rss2|atom)/?$' => 'index.php?author_name=$matches[1]&feed=$matches[2]',
+        'u/([^/]+)/page/?([0-9]{1,})/?$' => 'index.php?author_name=$matches[1]&paged=$matches[2]',
+        'u/([^/]+)/?$' => 'index.php?author_name=$matches[1]'
+    );
+    $rules = $new_rules + $rules;
+
+    return $rules;
 }
 ?>
