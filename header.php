@@ -35,8 +35,8 @@ Version: 1.0
 				</div>
 				<div class="login_text pc" style="padding-top: 25px;">
 				<?php if ( is_user_logged_in() ) {?>
-					<a class="rlogin reg_hre_btn" href="<?php echo wp_logout_url( get_permalink() ); ?>">退出</a>
-					<a class="rlogin login_hre_btn" href="<?php echo um_get_user_url('index'); ?>">用户中心</a>
+					<a class="rlogin reg_hre_btn" href="<?php echo wp_logout_url(get_bloginfo('url')); ?>">退出</a>
+					<a class="rlogin login_hre_btn" href="<?php global $current_user; echo get_author_posts_url($current_user->ID); ?>">用户中心</a>
 				<?php }else{ ?>
 					<a class="rlogin reg_hre_btn sign-up" href="javascript:;">注册</a>
 					<a class="rlogin login_hre_btn sign-in" href="javascript:;">登录</a>
@@ -64,7 +64,7 @@ Version: 1.0
 						</a>
 	        		</div>
         			<div class="header-info-content">
-	        			<a href="<?php echo um_get_user_url('index'); ?>">用户中心</a>
+	        			<a href="<?php echo get_author_posts_url($current_user->ID); ?>">用户中心</a>
 	        		</div>
 				<?php }else{ ?>
              	     <div class="header-logo">
@@ -73,7 +73,7 @@ Version: 1.0
 						</a>
 	        		</div>
         			<div class="header-info-content">
-	        			<a href="<?php echo wp_login_url( get_permalink() ); ?>">登录</a>
+	        			<a class="sign-in" href="javascript:;">登录</a>
 	        		</div>
 				<?php } ?>	
 	        	</div>

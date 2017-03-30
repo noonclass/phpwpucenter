@@ -140,7 +140,7 @@ $item_html = '<li class="tip">'.__('没有找到记录','um').'</li>';
 			}
 			if($pages>1) $item_html .= '<li class="tip">'.sprintf(__('第 %1$s 页，共 %2$s 页，每页显示 %3$s 条。','um'),$paged, $pages, $number).'</li>';
 		}else{
-			$item_html = '<li class="tip">'.sprintf(__('私信功能需要<a href="%s">登录</a>才可使用！','um'), wp_login_url() ).'</li>';
+			$item_html = '<li class="tip">'.__('私信功能需要<a class="sign-in" href="javascript:;">登录</a>才可使用！','um').'</li>';
 		}
 	}
 	echo '<ul class="user-msg">'.$item_html.'</ul>'.um_pager($paged, $pages);
