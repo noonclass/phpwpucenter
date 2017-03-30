@@ -36,7 +36,7 @@ function cx_like($id = 0) {
 	if($id == 0)
 	$id = get_the_ID();
 	echo '<span class="cx_like"><i class="fa fa-heart"></i>';
-	$like_ding = get_post_meta($id,'bigfa_ding',true);
+	$like_ding = get_post_meta($id,'um_post_likes',true);
 	if( isset($like_ding) && $like_ding != ""){
 		echo $like_ding;
 	} else {
