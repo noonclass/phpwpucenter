@@ -7,6 +7,9 @@ Author URI: http://moemob.com
 Description: 时尚自适应图片主题，集成了功能强大的前台用户中心
 Version: 1.0
 ****************************************************************/
+
+/* 禁止采集程序
+/* -------------------------------- */
 $user_agent = $_SERVER['HTTP_USER_AGENT'];
 $keys = 'FeedDemon|BOT|CrawlDaddy|Java|Feedly|UniversalFeedParser|ApacheBench|Swiftbot|ZmEu|oBot|jaunty|YandexBot|AhrefsBot|MJ12bot|WinHttp|EasouSpider|HttpClient';
 if (empty($user_agent) || preg_match('/'.$keys.'/i', $user_agent)) {
@@ -14,6 +17,16 @@ if (empty($user_agent) || preg_match('/'.$keys.'/i', $user_agent)) {
     wp_die('Block Spam...');
 }
 
+
+/* 禁止后台登录
+/* -------------------------------- */
+add_action('login_enqueue_scripts','login_protection');
+function login_protection(){
+    if(!isset($_GET['u']) || $_GET['u'] != 'webmaster')  wp_die('Disallow Rear Login...');
+}
+
+/* 全局变量定义
+/* -------------------------------- */
 date_default_timezone_set("PRC");
 
 if ( !defined( 'CX_THEME' ) ) 
@@ -1392,6 +1405,26 @@ function get_plain_footer(){
     $output .= '</body>';
     $output .= '</html>';
     echo $output;
+}
+
+/* 自动提取缩略图
+/* -------------------------------- */
+function get_the_thumbnail() {
+    global $post;
+    if ( has_post_thumbnail() ) { // 显示缩略图
+        echo '<a href="'.get_permalink().'">';
+        the_post_thumbnail('full');
+        echo '</a>';
+    } else {
+        $content = $post->post_content;
+        preg_match_all('/<img.*?(?: |\t|\r|\n)?src=[\'"]?(.+?)[\'"]?(?:(?: |\t|\r|\n)+.*?)?>/sim', $content, $imgs, PREG_PATTERN_ORDER);
+        $n = count($imgs[1]);
+        if($n > 0){ //用内容中的第一张图片做为缩略图
+            echo '<a href="'.get_permalink().'"><img src="'.$imgs[1][0].'" /></a>';
+        }else { // 输出默认图片
+            echo '<a href="'.get_permalink().'"><img src="http://placehold.it/820x150" /></a>';
+        }
+    }
 }
 
 //wp-pic的代码已全部结束，如果下面还有代码请立即删除

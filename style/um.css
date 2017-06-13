@@ -203,7 +203,7 @@ body.post-type-archive-store #main-wrap{background: #f1f1f1;}
 .other-sign a i,.local-account a i{margin-right:5px}
 .other-sign .qqlogin{background-color:#4a9cf8;color:#FFF;}
 .other-sign .weibologin {background-color: #e14d4c;color: #FFF;}
-#sign .other-sign div{width:50%;text-align:center;float:left;}
+#sign .other-sign div{margin-right: 10px;text-align:center;float:left;}
 #sign .switch{color:#999;cursor:pointer;margin:15px auto;display:inline-block}
 #sign .switch i{margin-right:5px;color:#ff6666}
 .nav-wrap #login-reg{float: right;margin-left: 5px;margin-right:5px;font-size: 14px;padding: 23px 0;height: 80px;}

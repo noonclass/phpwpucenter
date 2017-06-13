@@ -28,7 +28,7 @@ function um_loginbox(){
         </p>
         <p class="safe">
             <label class="remembermetext" for="rememberme"><input name="rememberme" type="checkbox" checked="checked" id="rememberme" class="rememberme" value="forever">记住我的登录</label>
-            <a class="lost" href="<?php echo get_option('home'); ?>/lostpassword"><?php _e('忘记密码 ?','tinection'); ?></a>
+            <a class="lost" href="<?php echo get_option('home'); ?>/reset"><?php _e('忘记密码 ?','tinection'); ?></a>
         </p>
         <p>
             <input class="submit" type="submit" value="登录" name="submit">

@@ -25,13 +25,9 @@ while ( have_posts() ) : the_post();
                 标签：<span class="tags_block"><?php the_tags('',',&nbsp;',''); ?></span> 
 			 </div>
 		  </div>
-		  <!--AD id:single_1002-->
 		  <div class="affs">
-			 <a href="#">
-				<img src="<?php echo CX_THEMES_URL;?>/images/cover/1.jpg" width="820" height="150">
-			 </a>
+            <?php get_the_thumbnail(); ?>
 		  </div>
-		   <!--AD.end-->
 		  <div class="content">
 			<div class="content_left">
 				<?php the_content();?>
